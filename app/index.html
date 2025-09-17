@@ -1,0 +1,5941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dígalo con Mónica</title>
+  <link rel="preload" as="video" href="./videos/jugada_normal.mp4">
+  <link rel="preload" as="video" href="./videos/mas_30.mp4">
+  <link rel="preload" as="video" href="./videos/menos_30.mp4">
+  <link rel="preload" as="video" href="./videos/doble_funcion.mp4">
+  <link rel="preload" as="video" href="./videos/sacrificio_2min.mp4">
+  <link rel="preload" as="video" href="./videos/RAFAGA.mp4">
+  <link rel="preload" as="video" href="./videos/AMULETO.mp4">
+  <link rel="preload" as="video" href="./videos/COMODIN.mp4">
+  <link rel="preload" as="video" href="./videos/cronometro_descarga_90.mp4">
+  <link rel="preload" as="video" href="./videos/cronometro_fantasma.mp4">
+  <link rel="preload" as="video" href="./videos/jugada_normal.webm">
+  <link rel="preload" as="video" href="./videos/mas_30.webm">
+  <link rel="preload" as="video" href="./videos/menos_30.webm">
+  <link rel="preload" as="video" href="./videos/doble_funcion.webm">
+  <link rel="preload" as="video" href="./videos/sacrificio_2min.webm">
+  <link rel="preload" as="video" href="./videos/RAFAGA.webm">
+  <link rel="preload" as="video" href="./videos/AMULETO.webm">
+  <link rel="preload" as="video" href="./videos/COMODIN.webm"as="video">
+  <link rel="preload" as="video" href="./videos/cronometro_descarga_90.webm">
+  <link rel="preload" as="video" href="./videos/cronometro_fantasma.webm">
+
+  <!-- Preload de cartas/fondos más frecuentes -->
+<link rel="preload" as="image" href="./assets/JUGADA NORMAL.png">
+<link rel="preload" as="image" href="./assets/mas_30.png">
+<link rel="preload" as="image" href="./assets/menos_30.png">
+<link rel="preload" as="image" href="./assets/DOBLE FUNCION.png">
+<link rel="preload" as="image" href="./assets/SACRIFICIO.png">
+<link rel="preload" as="image" href="./assets/DESCARGA ELECTRICA.png">
+<link rel="preload" as="image" href="./assets/COMODIN.png">
+<link rel="preload" as="image" href="./assets/AMULETO.png">
+<link rel="preload" as="image" href="./assets/RÁFAGA.png">
+<link rel="preload" as="image" href="./assets/CARTA FANTASMA V2.png">
+
+<link rel="preload" as="image" href="./assets/FondoCuchara.png">
+<link rel="preload" as="image" href="./assets/FondoTenedor.png">
+<link rel="preload" as="image" href="./assets/escudo_team_cuchara.png">
+<link rel="preload" as="image" href="./assets/escudo_team_tenedor.png">
+<link rel="preload" as="image" href="./assets/fondo_descarga.png">
+<link rel="preload" as="image" href="./assets/fondo_doble.png">
+<link rel="preload" as="image" href="./assets/fondo_fantasma.png">
+<link rel="preload" as="image" href="./assets/fondo_sacrificio.png">
+  
+
+<link rel="preload" as="image" href="./assets/diamond.svg">
+
+  <style>
+
+
+  @font-face {
+  font-family: 'Press Start 2P';
+  src: url('./fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  }
+
+  @font-face {
+  font-family: 'Orbitron';
+  src: url('./fonts/Orbitron-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  }
+
+  @font-face {
+  font-family: 'Orbitron';
+  src: url('./fonts/Orbitron-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  }
+
+
+  .pantalla-inicio {
+  background: url('./assets/fondo_intro.png') no-repeat center top fixed;
+  background-size: cover;
+  background-position: center 10%;  /* 👈 bajá el fondo un poco */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.start-btn {
+  font-family: 'Press Start 2P', sans-serif; /* O la fuente arcade que uses */
+  font-size: 40px;
+  color: #fff;
+  background: transparent;
+  display: inline-block;
+  animation: blink 1.2s infinite;
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+@keyframes zoomOutStart {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(10);
+    opacity: 0;
+  }
+}
+.pantalla-inicio.zoom-out {
+  animation: zoomOutStart 0.6s ease forwards;
+}
+
+
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: white;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: scroll;
+      background-size: cover;
+      transition: background-image 0.4s ease-in-out;
+      position: relative;
+    }
+    .filtro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 0;
+    }
+
+.zona-equipos {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: clamp(20px, 5vw, 40px);
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+    
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    button {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  padding: 14px 28px;
+  margin: 10px;
+  border: 3px solid #fff;
+  border-radius: 14px;
+  background: linear-gradient(to bottom, #ffbf00, #ff8c00);
+  color: #000;
+  text-shadow: 1px 1px #fff;
+  box-shadow: 0 5px #b35b00;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
+button:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px #b35b00;
+}
+
+button:hover {
+  filter: brightness(1.15);
+}
+
+.boton-cuchara {
+  background: linear-gradient(to bottom, #ff5e5e, #c62828);
+  box-shadow: 0 5px #801010;
+  color: white;
+}
+
+.boton-tenedor {
+  background: linear-gradient(to bottom, #ffd600, #f7b801);
+  box-shadow: 0 5px #a68c00;
+  color: black;
+}
+
+
+    .equipos {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .puntos {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    #btn-detener {
+      font-size: 16px;
+      padding: 8px 20px;
+      background-color: #e8563f;
+    }
+    #btn-reset {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      font-size: 14px;
+      padding: 6px 14px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      opacity: 0.8;
+      z-index: 10000; /* ✅ Más alto que el cartel de ganador */
+    }
+    
+  
+    @keyframes popupFade {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    #popupConfirmacion {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#popupConfirmacion .popup-inner {
+  background: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 300px;
+  animation: popupFade 0.4s ease;
+}
+
+@keyframes popupFade {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+    
+    #cartaContainer img {
+  border-radius: 5px;
+}
+
+
+
+@keyframes flipIn {
+  from {
+    transform: rotateY(90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+.carta-animada {
+  animation: flipIn 0.6s ease-out;
+  transform-style: preserve-3d;
+  display: inline-block;
+}
+
+#turnoActual {
+  font-size: 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 10px 20px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+@keyframes turnoFlashZoom {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.turno-animado {
+  animation: turnoFlashZoom 0.4s ease;
+}
+
+@keyframes cronometroFadeZoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+#cronometro.animar-entrada {
+  animation: cronometroFadeZoom 0.4s ease;
+}
+
+.carta-especial {
+  animation: efectoBrilloEspecial 0.6s ease;
+}
+@keyframes efectoBrilloEspecial {
+  0% { box-shadow: 0 0 0px #ffd700; transform: scale(1); }
+  50% { box-shadow: 0 0 30px #ffd700; transform: scale(1.05); }
+  100% { box-shadow: 0 0 0px #ffd700; transform: scale(1); }
+}
+
+.carta-sacudida {
+  animation: sacudidaCarta 0.4s ease;
+}
+
+@keyframes sacudidaCarta {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+/* Ocultar cronómetro hasta sacar carta */
+#cronometro {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  margin: 0 auto;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+#cronometro.visible {
+  display: block;
+  opacity: 1;
+}
+
+
+.puntaje {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 26px;
+  color: #fff;
+  margin-top: 10px;
+  background-color: rgba(0,0,0,0.65);
+  padding: 8px 16px;
+  border-radius: 12px;
+  letter-spacing: 1px;
+}
+
+
+@keyframes escudoActivoZoom {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    filter: brightness(1.4);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+.escudo-activo {
+  animation: escudoActivoZoom 0.5s ease;
+}
+
+.zona-equipos {
+  position: relative;
+  z-index: 1;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-top: 20px;
+}
+
+@keyframes escudoDropIn {
+  0% {
+    transform: translateY(-400px) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(30px) rotate(8deg);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(-10px) rotate(-5deg);
+  }
+  85% {
+    transform: translateY(5px) rotate(2deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.escudo-drop {
+  animation: escudoDropIn 4.4s ease-out;
+}
+
+@keyframes botonPulse {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.15); }
+  60% { transform: scale(0.95); }
+  80% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.boton-animado {
+  animation: botonPulse 0.3s ease;
+}
+
+#zonaJuego {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.zona-izquierda {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 280px;
+  gap: 150px; /* <- este valor sube cuchara y baja tenedor */
+  padding-bottom: 40px;
+  box-sizing: border-box;
+}
+
+
+#btn-detener {
+  display: none;
+}
+
+.contenedor-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  box-sizing: border-box;
+  gap: 30px;
+}
+
+.zona-central {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;  /* 👈 Ya no se re-centra */
+  gap: 20px;
+  max-width: 800px;
+  padding-top: 20px; /* Podés ajustar si lo querés más al medio visualmente */
+}
+
+
+
+.equipo {
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.escudo {
+  width: 100%;
+  max-width: 280px;
+  object-fit: contain;
+  height: auto;
+  display: block;
+}
+
+@media screen and (max-width: 1024px) {
+  #zonaJuego {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .equipo {
+    max-width: 280px;
+  }
+
+  .zona-central {
+    width: 100%;
+    max-width: 90vw;
+  }
+}
+
+.equipo-cuchara {
+  margin-top: 60px; /* 👈 Ajustá este valor para bajarlo más */
+}
+
+
+.carta-legendaria {
+  animation: entradaLegendaria 0.6s ease-out;
+}
+
+@keyframes entradaLegendaria {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.carta-legendaria {
+  animation: entradaLegendaria 0.6s ease-out, flotando 2.5s ease-in-out infinite, resplandorDorado 1.5s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+@keyframes entradaLegendaria {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes flotando {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes resplandorDorado {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(255, 223, 0, 0.9);
+  }
+}
+
+.mensaje-legendario {
+  animation: brillarFrase 2.2s ease-in-out infinite;
+  color: #ffd700;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  letter-spacing: 0.5px;
+}
+
+@keyframes brillarFrase {
+  0%, 100% {
+    opacity: 0.9;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 12px rgba(255, 223, 100, 1);
+  }
+}
+
+.mensaje-incorrecto {
+  font-size: 28px;
+  color: #ff4f4f;
+  text-shadow: 0 0 8px #ff0000;
+  font-weight: bold;
+  animation: parpadeoIncorrecto 1s ease-in-out;
+}
+
+.mensaje-incorrecto .emoji {
+  font-size: 32px;
+  margin-right: 6px;
+}
+
+.mensaje-incorrecto .puntos {
+  font-size: 24px;
+  color: #ffc0cb;
+  margin-left: 10px;
+  text-shadow: 0 0 10px #ffaaaa;
+}
+
+@keyframes parpadeoIncorrecto {
+  0% { opacity: 0.5; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.mensaje-correcto {
+  font-size: 28px;
+  color: #00ff88;
+  text-shadow: 0 0 8px #00ff88;
+  font-weight: bold;
+  animation: parpadeoCorrecto 1.2s ease-in-out;
+}
+
+.mensaje-correcto .emoji {
+  font-size: 32px;
+  margin-right: 6px;
+}
+
+.mensaje-correcto .puntos {
+  font-size: 24px;
+  color: #fff94f;
+  margin-left: 10px;
+  text-shadow: 0 0 12px #ffd700;
+}
+
+@keyframes parpadeoCorrecto {
+  0% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.mensaje-amuleto {
+  font-size: 26px;
+  color: #ffe96b;
+  text-align: center;
+  animation: amuletoBrillo 2s ease-in-out;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.mensaje-amuleto .linea1 {
+  font-size: 28px;
+  animation: resplandorAmuleto 1.2s ease-in-out infinite;
+}
+
+.mensaje-amuleto .linea2 {
+  font-size: 20px;
+  margin-top: 4px;
+  font-style: italic;
+  color: #fffab9;
+}
+
+@keyframes amuletoBrillo {
+  0% { opacity: 0; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes resplandorAmuleto {
+  0%, 100% { text-shadow: 0 0 10px #ffd700; }
+  50% { text-shadow: 0 0 20px #fff799; }
+}
+
+
+.fantasma-crono {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 64px;
+  color: #c1c1c1;
+  text-align: center;
+  letter-spacing: 3px;
+  text-shadow: 
+    0 0 2px #fff,
+    0 0 5px #ccc,
+    1px 0 #999,
+    -1px 0 #999;
+  filter: brightness(1.3) contrast(1.2);
+  margin-top: 20px;
+}
+
+
+@keyframes glitchText {
+  0% { transform: translate(0); opacity: 1; }
+  20% { transform: translate(1px, -1px); opacity: 0.95; }
+  40% { transform: translate(-1px, 1px); opacity: 1; }
+  60% { transform: translate(1px, 1px); opacity: 0.92; }
+  80% { transform: translate(-2px, -1px); opacity: 1; }
+  100% { transform: translate(0); opacity: 0.98; }
+}
+
+@keyframes glitchEntrada {
+  0%   { transform: translate(0); opacity: 1; }
+  20%  { transform: translate(1px, -1px); opacity: 0.95; }
+  40%  { transform: translate(-1px, 1px); opacity: 1; }
+  60%  { transform: translate(1px, 1px); opacity: 0.92; }
+  80%  { transform: translate(-2px, -1px); opacity: 1; }
+  100% { transform: translate(0); opacity: 0.98; }
+}
+
+.animar-glitch {
+  animation: glitchEntrada 1.5s ease-in-out;
+}
+
+/* Carta con glow negro */
+.carta-fantasma {
+  animation: vibrarFantasma 1.2s infinite ease-in-out, resplandorFantasma 2s infinite ease-in-out;
+  box-shadow: 0 0 50px rgba(178, 102, 255, 0.9);
+  border: 3px solid #b266ff;
+  border-radius: 10px;
+}
+
+/* Animación de vibración */
+@keyframes vibrarFantasma {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-1.5deg) scale(1.02); }
+  50% { transform: rotate(1.5deg) scale(0.98); }
+  75% { transform: rotate(-1deg) scale(1.01); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* Animación de resplandor violeta pulsante */
+@keyframes resplandorFantasma {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(178, 102, 255, 0.6), 0 0 40px rgba(178, 102, 255, 0.9);
+  }
+  50% {
+    box-shadow: 0 0 80px rgba(178, 102, 255, 1), 0 0 100px rgba(178, 102, 255, 0.9);
+  }
+}
+
+
+/* Movimiento tembloroso */
+@keyframes vibrarFantasma {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-1.5deg) scale(1.02); }
+  50% { transform: rotate(1.5deg) scale(0.98); }
+  75% { transform: rotate(-1deg) scale(1.01); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* Fondo fantasmagórico */
+.fondo-fantasma {
+  background: radial-gradient(circle, #1a1a1a 10%, #000 90%);
+  transition: background 1s ease;
+}
+
+/* Texto de puntaje aleatorio */
+#puntajeFantasma {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  color: #fff;
+  background: rgba(0,0,0,0.7);
+  padding: 15px 25px;
+  border-radius: 12px;
+  border: 2px solid #aaa;
+  z-index: 1000;
+  display: none;
+}
+
+@keyframes zoomFantasma {
+  0% {
+    transform: scale(2.3);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.carta-fantasma {
+  animation: vibrarFantasma 1.2s infinite ease-in-out, resplandorFantasma 2s infinite ease-in-out, zoomFantasma 0.5s ease-out;
+  box-shadow: 0 0 50px rgba(178, 102, 255, 0.9);
+  border: 3px solid #b266ff;
+  border-radius: 10px;
+}
+
+.carta-cambiazo {
+  animation: entradaCambiazo 0.6s ease-out, flotandoCambiazo 2.5s ease-in-out infinite, resplandorCambiazo 1.8s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+  border: 3px solid #ff69b4;
+  border-radius: 12px;
+}
+
+/* Entrada inicial */
+@keyframes entradaCambiazo {
+  0% { transform: scale(0.6); opacity: 0; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Flotación suave */
+@keyframes flotandoCambiazo {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Resplandor pulsante rosa */
+@keyframes resplandorCambiazo {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 105, 180, 0.4), 0 0 40px rgba(255, 105, 180, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 70px rgba(255, 105, 180, 1), 0 0 100px rgba(255, 105, 180, 0.9);
+  }
+}
+
+/* --- DESCARGA: vibración + glow naranja --- */
+@keyframes resplandorDescarga {
+  0%, 100% { box-shadow: 0 0 28px rgba(255,165,0,0.6), 0 0 60px rgba(255,200,0,0.85); }
+  50%      { box-shadow: 0 0 80px rgba(255,165,0,1),   0 0 110px rgba(255,220,0,0.95); }
+}
+
+@keyframes vibrarDescarga {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-1.2deg) scale(1.02); }
+  50% { transform: rotate(1.2deg) scale(0.98); }
+  75% { transform: rotate(-0.8deg) scale(1.01); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* Carta con resplandor/temblor naranja y borde completo */
+.carta-descarga {
+  animation: vibrarDescarga 1.1s infinite ease-in-out, resplandorDescarga 1.8s infinite ease-in-out;
+  border: 3px solid #ffb300; /* borde en toda la carta */
+  border-radius: 12px;
+}
+
+/* Fondo naranja detrás, similar a 'fondo-fantasma' */
+.fondo-descarga {
+  background: radial-gradient(circle, #2a1a00 10%, #000 90%);
+  transition: background 0.9s ease;
+}
+
+
+
+.mensaje-final {
+  font-size: 15px;              /* 👈 Texto más chico */
+  color: #fff;
+  background: #000000cc;
+  padding: 10px 14px;           /* 👈 Menos padding */
+  border: 2px solid #fff;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 12px;
+  max-width: 300px;             /* 👈 Para que no se expanda tanto */
+  margin-left: auto;
+  margin-right: auto;           /* 👈 Centrado */
+  line-height: 1.4;             /* 👈 Más legible */
+}
+
+.start-btn.parpadeo {
+  animation: blink 1.2s infinite;
+}
+
+.contenedor-meta {
+  margin-top: 24px;
+  padding: 20px;
+  background: #1a001f;
+  border: 2px solid #b266ff;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 12px rgba(178, 102, 255, 0.6);
+  width: 100%;
+  max-width: 300px;
+}
+
+.contenedor-meta label {
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 14px;
+  color: #fff;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.selector-puntos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  font-size: 30px;
+  font-family: 'Press Start 2P', monospace;
+  color: #fff;
+  background-color: #000;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(178, 102, 255, 0.6);
+}
+
+.selector-puntos .flecha {
+  font-size: 28px;
+  background-color: #000;
+  color: #ff9900;
+  border: 3px solid #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Press Start 2P', monospace;
+  box-shadow: 0 0 6px #ff9900;
+  transition: all 0.2s ease;
+}
+
+/* Ajuste de tamaño sólo para el selector de DIAMANTES del inicio */
+#selectorDiamantes { font-size: 22px; }
+#selectorDiamantes .flecha { font-size: 22px; padding: 8px 12px; }
+
+
+.selector-puntos .flecha:hover {
+  background-color: #ff9900;
+  color: #000;
+  box-shadow: 0 0 12px #ff9900;
+}
+
+#btn-sacar[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@keyframes zoomInGanador {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.overlay-victoria {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.6);
+    z-index: 9998;
+  }
+
+#btn-fullscreen {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  font-size: 14px;
+  padding: 6px 14px;
+  background-color: #222;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  opacity: 0.85;
+  z-index: 10000;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+}
+
+#puntajeFantasma {
+  display: none !important;
+}
+
+
+.cartel-ganador {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 24px;
+  padding: 40px 30px;
+  border: 4px solid #fff;
+  border-radius: 20px;
+  background: radial-gradient(circle, #000 40%, #222 100%);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.cartel-animado {
+  animation: zoomInGanador 0.4s ease-out;
+}
+
+
+.cartel-ganador.visible {
+  opacity: 1;
+}
+
+.cartel-ganador.invisible {
+  opacity: 0;
+}
+
+
+.cartel-ganador {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, #111 30%, #000 100%);
+  padding: 40px 50px;
+  border-radius: 24px;
+  border: 3px solid white;
+  box-shadow: 0 0 60px white;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 9999;
+}
+
+.icono-final {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.texto-ganador {
+  font-size: 24px;
+  font-family: 'Press Start 2P', monospace;
+  margin-bottom: 14px;
+}
+
+.subtexto-ganador {
+  font-size: 16px;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.btn-volver {
+  font-size: 16px;
+  font-family: 'Orbitron', sans-serif;
+  padding: 10px 20px;
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 12px white;
+}
+
+/* Animaciones ya incluidas */
+.cartel-ganador.invisible {
+  opacity: 0;
+}
+
+.cartel-ganador.visible {
+  opacity: 1;
+}
+
+.cartel-animado {
+  animation: entradaEstelar 0.6s ease-out forwards;
+}
+
+@keyframes entradaEstelar {
+  0% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0;
+    box-shadow: 0 0 0 transparent;
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 1;
+    box-shadow: 0 0 25px rgba(255,255,255,0.5);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 40px rgba(255,255,255,0.3);
+  }
+}
+
+.fuegos-artificiales {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+.fuego {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  animation: explotar 1s ease-out forwards, fade 1.2s ease-out forwards;
+}
+
+.fuego1 {
+  top: 80%;
+  left: 30%;
+  animation-delay: 0.1s;
+}
+
+.fuego2 {
+  top: 80%;
+  left: 60%;
+  animation-delay: 0.3s;
+}
+
+.fuego3 {
+  top: 80%;
+  left: 45%;
+  animation-delay: 0.5s;
+}
+
+@keyframes explotar {
+  0% { transform: scale(1) translateY(0); opacity: 1; }
+  30% { transform: scale(2) translateY(-100px); }
+  100% { transform: scale(4) translateY(-200px); }
+}
+
+@keyframes fade {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.btn-fullscreen {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 18px;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+  transition: background 0.3s;
+}
+
+.btn-fullscreen:hover {
+  background: #444;
+}
+
+
+@keyframes parpadeoListo {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+#btn-listo.animado {
+  animation: parpadeoListo 1s infinite;
+  color: black;
+  border: 3px solid white;
+  font-weight: bold;
+}
+
+#btn-listo.animado.boton-cuchara {
+  box-shadow: 0 0 14px #ff3333; /* rojo brillante */
+}
+
+#btn-listo.animado.boton-tenedor {
+  box-shadow: 0 0 14px #fff000; /* amarillo */
+}
+
+@keyframes zoomOutDesaparecer {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+#btn-listo.desaparecer {
+  animation: zoomOutDesaparecer 0.3s forwards;
+}
+
+#cartaContainer,
+#cronometro {
+  transition: margin-top 0.3s ease, transform 0.3s ease;
+}
+
+#btn-listo {
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+#btn-listo {
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+#btn-listo.oculto-suave {
+  opacity: 0;
+  margin-bottom: 0;
+  pointer-events: none;
+  visibility: hidden; /* 👈 evita el saltito */
+}
+
+.fondo-turno-cuchara {
+  background-color: rgba(255, 70, 70, 0.08);
+  transition: background-color 0.3s ease;
+}
+
+.fondo-turno-tenedor {
+  background-color: rgba(255, 230, 0, 0.08);
+  transition: background-color 0.3s ease;
+}
+
+.cartelera.turno-cuchara {
+  box-shadow: 0 0 30px rgba(255, 70, 70, 0.8), 0 0 60px rgba(255, 0, 0, 0.5);
+}
+
+.cartelera.turno-tenedor {
+  box-shadow: 0 0 30px rgba(255, 230, 0, 0.8), 0 0 60px rgba(255, 200, 0, 0.5);
+}
+
+@keyframes parpadeoCambiazo {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.03); }
+}
+
+
+
+/* === POPUP VISUAL DE PUNTAJE === */
+#popupPuntaje {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;                 /* oculto por defecto */
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+#popupPuntaje .box {
+  background: #111;
+  color: #fff;
+  border: 3px solid #fff;
+  border-radius: 16px;
+  padding: 24px;
+  width: 320px;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  box-shadow: 0 0 20px rgba(255,255,255,0.25);
+  animation: popupFade 0.25s ease;
+}
+
+#popupPuntaje h3 {
+  margin: 0 0 8px 0;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 16px;
+}
+
+.p-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.p-label {
+  font-size: 12px;
+  opacity: 0.85;
+  text-align: right;
+}
+
+.p-input {
+  background: #000;
+  color: #fff;
+  border: 2px solid #555;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 18px;
+  text-align: center;
+  outline: none;
+}
+
+.p-steps {
+  display: flex;
+  gap: 6px;
+  justify-content: left;
+}
+
+.p-steps button {
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  background: #222;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+.p-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.p-actions .ok {
+  background: linear-gradient(to bottom, #20d07a, #0a9a53);
+  color: #000;
+  border: 2px solid #fff;
+}
+
+.p-actions .cancel {
+  background: #333;
+  color: #fff;
+  border: 2px solid #777;
+}
+
+/* --- Quitar flechitas de los inputs number (seguro) --- */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+@keyframes flashRayo {
+  0%   { background-color: #fff94f; color: #000; transform: scale(1.3); }
+  50%  { background-color: #ffbf00; color: #000; transform: scale(1.1); }
+  100% { background-color: transparent; color: #fff; transform: scale(1); }
+}
+
+.puntaje-flash-rayo {
+  animation: flashRayo 0.8s ease-out;
+  border-radius: 10px;
+  padding: 4px 10px;
+}
+
+
+/* --- SACRIFICIO: borde y glow rojo intenso --- */
+.carta-sacrificio {
+  animation: vibrarSacrificio 1.1s infinite ease-in-out, resplandorSacrificio 1.8s infinite ease-in-out;
+  border: 3px solid #ff3333;
+  border-radius: 14px;
+  box-shadow: 0 0 20px rgba(255, 60, 60, 0.7);
+}
+
+/* Animación de vibración suave */
+@keyframes vibrarSacrificio {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-1.2deg) scale(1.02); }
+  50% { transform: rotate(1.2deg) scale(0.98); }
+  75% { transform: rotate(-0.8deg) scale(1.01); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* Resplandor rojo pulsante */
+@keyframes resplandorSacrificio {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(255, 60, 60, 0.7), 0 0 60px rgba(255, 0, 0, 0.9);
+  }
+  50% {
+    box-shadow: 0 0 45px rgba(255, 120, 120, 1), 0 0 90px rgba(255, 0, 0, 0.95);
+  }
+}
+
+.mensaje-sacrificio {
+  font-size: 26px;
+  color: #ff4f4f;
+  text-align: center;
+  animation: sacrificioBrillo 1.6s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(255, 50, 50, 0.8);
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+@keyframes sacrificioBrillo {
+  0%, 100% { opacity: 0.9; text-shadow: 0 0 10px rgba(255, 60, 60, 0.8); }
+  50% { opacity: 1; text-shadow: 0 0 18px rgba(255, 0, 0, 1); }
+}
+
+/* Popup Sacrificio (estilo consistente) */
+#popupSacrificio { display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:9999; justify-content:center; align-items:center; }
+#popupSacrificio .popup-inner {
+  background:#000;
+  color:#fff;
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+  max-width:320px;
+  width:90%;
+  animation: popupFade .25s ease;
+  box-shadow: 0 0 30px rgba(255,0,0,.65);
+}
+
+/* === DOBLE FUNCIÓN: glow azul === */
+.carta-doble-azul {
+  animation: vibrarDFAzul 1.15s infinite ease-in-out, resplandorDFAzul 1.8s infinite ease-in-out;
+  border: 3px solid #4fc3f7;         /* celeste */
+  border-radius: 16px;
+  box-shadow: 0 0 24px rgba(79,195,247,0.55);
+}
+
+@keyframes vibrarDFAzul {
+  0%   { transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(-1.1deg) scale(1.02); }
+  50%  { transform: rotate(1.1deg)  scale(0.985); }
+  75%  { transform: rotate(-0.8deg) scale(1.01); }
+  100% { transform: rotate(0deg)    scale(1); }
+}
+
+@keyframes resplandorDFAzul {
+  0%, 100% { box-shadow: 0 0 26px rgba(79,195,247,0.55), 0 0 60px rgba(0,153,255,0.6); }
+  50%      { box-shadow: 0 0 80px rgba(79,195,247,0.95), 0 0 110px rgba(0,153,255,0.85); }
+}
+
+/* (Opcional) Fondo azulado suave durante DF, como hiciste con Fantasma/Descarga */
+.fondo-doble {
+  background: radial-gradient(circle, #001933 10%, #000 90%);
+  transition: background 0.9s ease;
+}
+
+
+/* === DOBLE FUNCIÓN: Luz de cámara / proyector (azul) === */
+#dfLuzCamara .df-haz{
+  position:absolute; top:0; left:50%;
+  width:42vw; height:75vh; transform-origin: top center;
+  background: radial-gradient(ellipse at top, rgba(0,153,255,.55), rgba(0,153,255,.18) 55%, rgba(0,153,255,.03) 75%, transparent 85%);
+  filter: blur(2px);
+  opacity: .34;
+  animation: dfFlicker 2.2s infinite ease-in-out;
+}
+#dfLuzCamara .df-haz.izq{ transform: translateX(-55%) rotate(-7deg) skewX(-6deg); }
+#dfLuzCamara .df-haz.der{ transform: translateX(-45%) rotate(7deg)  skewX(6deg);  }
+
+@keyframes dfFlicker{
+  0%,100%{opacity:.28}
+  40%{opacity:.42}
+  60%{opacity:.32}
+  80%{opacity:.5}
+}
+
+/* Leds de estado (1ª y 2ª función) */
+#dfLuzCamara .df-leds{
+  position:fixed; top:18px; left:50%; transform:translateX(-50%);
+  display:flex; gap:14px;
+}
+#dfLuzCamara .led{
+  width:20px; height:20px; border-radius:50%;
+  background:#4a4a4a;
+  box-shadow:0 0 0 transparent;
+  border:2px solid #cfefff;     /* aro sutil */
+}
+#dfLuzCamara .led.on{
+  background:#00aaff;
+  box-shadow:0 0 16px rgba(0,170,255,.95), 0 0 36px rgba(0,120,255,.55);
+}
+
+#dfLuzCamara .led.blink{
+  animation: ledBlink .9s infinite;
+}
+@keyframes ledBlink{
+  0%,60%{ background:#4a4a4a; box-shadow:none; }
+  61%,100%{ background:#00aaff; box-shadow:0 0 14px rgba(0,170,255,.9), 0 0 34px rgba(0,120,255,.5); }
+}
+
+/* Leyenda azul para DOBLE FUNCIÓN */
+.mensaje-df-azul{
+  display:inline-block;
+  margin-top:12px;
+  padding:12px 18px;
+  color:#dff3ff;
+  background: radial-gradient(circle at 30% 20%, rgba(0,153,255,.20), rgba(0,25,51,.75));
+  border:2px solid #5ecbff;
+  border-radius:14px;
+  font-family:'Orbitron', sans-serif;
+  font-size:18px;
+  letter-spacing:.4px;
+  box-shadow:0 0 18px rgba(0,153,255,.35);
+}
+.mensaje-df-azul b{ color:#ffffff; text-shadow:0 0 6px rgba(160,220,255,.8); }
+
+/* === Leyenda de puntos (pill) === */
+.pill-puntos{
+  display:inline-block;
+  margin-left:10px;
+  padding:6px 10px;
+  border-radius:12px;
+  font-weight:700;
+  font-size:16px;
+  line-height:1;
+}
+.pill-puntos.ganado{
+  color:#d9ffe5; background:#115b2a; border:2px solid #1ed760;
+  box-shadow:0 0 12px rgba(30,215,96,.3);
+}
+.pill-puntos.perdido{
+  color:#ffd6d6; background:#5b1111; border:2px solid #ff5252;
+  box-shadow:0 0 12px rgba(255,82,82,.25);
+}
+.pill-puntos.neutro{
+  color:#e8f0ff; background:#1b2a3a; border:2px solid #7aa6ff;
+  box-shadow:0 0 10px rgba(122,166,255,.25);
+}
+/* Variante azul cuando estás en DOBLE FUNCIÓN */
+.pill-puntos.df{
+  color:#dff3ff; background:rgba(0,153,255,.18); border:2px solid #5ecbff;
+  box-shadow:0 0 12px rgba(0,153,255,.35);
+}
+
+/* === PARTICIPANTES: estilos del botón en la Intro === */
+#btn-participantes-intro{
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10001;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  padding: 10px 18px;
+  border: 3px solid #fff;
+  border-radius: 12px;
+  background: linear-gradient(to bottom,#7cffc0,#22cc88);
+  color: #000;
+  text-shadow: 1px 1px #fff;
+  box-shadow: 0 5px #0f7f56;
+  cursor: pointer;
+}
+
+/* === PARTICIPANTES: modal === */
+#modal-participantes{
+  position: fixed; inset: 0; display: none;
+  align-items: center; justify-content: center;
+  background: rgba(0,0,0,.7); z-index: 10050;
+  
+}
+#modal-participantes .mp-box{
+  width: 92%; max-width: 520px;
+  background: #0c0c0c; color:#fff; border:3px solid #fff; border-radius: 16px;
+  padding: 18px; font-family: 'Orbitron', sans-serif; text-align: left;
+  box-shadow: 0 0 24px rgba(255,255,255,.25);
+  overflow: hidden;            /* 👈 evita que algo sobresalga */
+  box-sizing: border-box;
+}
+
+
+/* Layout 2 columnas */
+.mp-two-col{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.mp-col{
+  background: #121212;
+  border: 2px solid #2a2a2a;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,.35);
+}
+
+.mp-col-title{
+  font-family:'Press Start 2P', cursive;
+  font-size: 14px;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  border: 2px solid #555;
+  border-radius: 10px;
+  display:inline-block;
+  background: linear-gradient(to bottom,#1a1a1a,#0e0e0e);
+}
+
+/* Fila cantidad compacta */
+#modal-participantes .mp-row{
+  grid-template-columns: 90px minmax(0,1fr);
+}
+
+/* Listas de nombres con ancho controlado */
+#mp-lista-cuchara, #mp-lista-tenedor{
+  max-width: 360px;
+  margin: 10px 0 0;
+  padding: 0 4px;
+  display: grid;
+  gap: 8px;
+}
+
+/* Inputs prolijos */
+#mp-lista-cuchara input, #mp-lista-tenedor input{
+  width:100%;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-family: 'Orbitron', sans-serif;
+  border: 2px solid #666;
+  border-radius: 12px;
+  background: linear-gradient(to bottom, #111, #1b1b1b);
+  color: #fff;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.55);
+  transition: border-color .2s, box-shadow .2s;
+}
+#mp-lista-cuchara input:focus, #mp-lista-tenedor input:focus{
+  border-color: #ffcc00;
+  box-shadow: 0 0 8px rgba(255,204,0,.45), inset 0 2px 6px rgba(0,0,0,0.55);
+  outline: none;
+}
+
+/* Responsive: en pantallas chicas apilamos */
+@media (max-width: 860px){
+  .mp-two-col{ grid-template-columns: 1fr; }
+}
+
+#modal-participantes h2{
+  margin: 0 0 10px 0; font-family: 'Press Start 2P', cursive; font-size: 16px;
+}
+.mp-tabs{ display:flex; gap:8px; margin:10px 0 12px 0; }
+.mp-tab{
+  padding:8px 12px; border:2px solid #999; border-radius:10px; background:#1b1b1b; color:#fff;
+  cursor:pointer; font-size:14px;
+}
+.mp-tab.mp-active{ border-color:#fff; box-shadow:0 0 10px rgba(255,255,255,.25); }
+.mp-row{ display:grid; grid-template-columns: 120px 1fr; gap:10px; align-items:center; margin:8px 0; }
+.mp-row label{ font-size:13px; opacity:.9; }
+.mp-row input[type="number"], .mp-row input[type="text"]{
+  background:#000; color:#fff; border:2px solid #555; border-radius:10px; padding:8px 10px; font-size:16px;
+}
+#mp-lista-nombres{ display:grid; gap:8px; margin-top:10px; }
+#mp-lista-nombres input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-family: 'Orbitron', sans-serif;
+  border: 2px solid #666;
+  border-radius: 12px;
+  background: linear-gradient(to bottom, #111, #222);
+  color: #fff;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.55); /* 👈 sin glow exterior */
+  transition: all 0.2s ease;
+}
+
+/* Contenedor de nombres centrado y con ancho límite */
+#mp-lista-nombres{
+  max-width: 420px;            /* 👈 ya no “toca” los bordes */
+  margin: 10px auto 0;
+  padding: 0 6px;
+  gap: 8px;
+}
+
+#mp-lista-nombres input:focus {
+  border-color: #ffcc00;
+  box-shadow: 0 0 8px rgba(255,204,0,.45), inset 0 2px 6px rgba(0,0,0,0.55);
+  outline: none;
+}
+
+/* Hacer más compacta la fila "Cantidad" */
+#modal-participantes .mp-row{
+  grid-template-columns: 120px minmax(0, 1fr);
+}
+#modal-participantes .mp-row input[type="number"]{
+  max-width: 360px;
+  margin: 0 auto;              /* centrado */
+}
+
+
+.mp-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:14px; }
+.mp-actions .ok{
+  background:linear-gradient(to bottom,#20d07a,#0a9a53); color:#000; border:2px solid #fff; border-radius:10px; padding:10px 16px;
+}
+.mp-actions .cancel{
+  background:#333; color:#fff; border:2px solid #777; border-radius:10px; padding:10px 16px;
+}
+
+/* === PARTICIPANTES: banner “Quién juega” === */
+#turn-owner{
+  position: fixed;
+  top: 55px; left: 50%; transform: translateX(-50%);
+  z-index: 9000; 
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.18), rgba(0,0,0,.75));
+  border: 2px solid #fff; border-radius: 14px;
+  padding: 8px 14px; 
+  display: none;
+  font-family: 'Orbitron', sans-serif; 
+  text-shadow: 0 0 6px rgba(255,255,255,.35);
+}
+#turn-owner .owner-team{
+  font-size: 12px; letter-spacing: .4px; opacity: .9;
+}
+#turn-owner .owner-name{
+  display:block; font-family:'Press Start 2P', cursive; font-size:18px; margin-top:4px;
+}
+.turno-cuchara #turn-owner{ box-shadow: 0 0 22px rgba(255,70,70,.6); }
+.turno-tenedor #turn-owner{ box-shadow: 0 0 22px rgba(255,230,0,.6); }
+
+/* Quitar flechitas de number (consistente con tu estilo) */
+#modal-participantes input[type="number"]::-webkit-outer-spin-button,
+#modal-participantes input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+#modal-participantes input[type="number"] { -moz-appearance: textfield; }
+
+/* === Modal Participantes: layout 2 columnas, inputs contenidos === */
+#modal-participantes .mp-box{
+  overflow: hidden;          /* nada se “escapa” de la caja */
+  box-sizing: border-box;
+}
+
+.mp-two-col{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.mp-col{
+  background: #121212;
+  border: 2px solid #2a2a2a;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,.35);
+}
+
+.mp-col-title{
+  font-family:'Press Start 2P', cursive;
+  font-size: 14px;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  border: 2px solid #555;
+  border-radius: 10px;
+  display:inline-block;
+  background: linear-gradient(to bottom,#1a1a1a,#0e0e0e);
+}
+
+/* Fila "Cantidad": label corto + input con ancho fijo */
+#modal-participantes .mp-row{
+  display: grid;
+  grid-template-columns: 90px minmax(0,1fr);
+  gap: 10px;
+  align-items: center;
+  margin: 8px 0;
+}
+#modal-participantes .mp-row input[type="number"]{
+  width: 90px;          /* 👈 más chico */
+  margin: 0;            /* sin centrar, queda al ras del grid */
+}
+
+/* Contenedores de nombres con ancho controlado */
+#mp-lista-cuchara, #mp-lista-tenedor{
+  max-width: 360px;     /* 👈 no ocupa todo el panel */
+  margin-top: 10px;
+  padding: 0 4px;
+  display: grid;
+  gap: 8px;
+}
+
+/* Inputs de nombres: 100% del contenedor y sin “salirse” */
+#mp-lista-cuchara input, #mp-lista-tenedor input{
+  box-sizing: border-box;  /* 👈 clave para que no desborde */
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-family: 'Orbitron', sans-serif;
+  border: 2px solid #666;
+  border-radius: 12px;
+  background: linear-gradient(to bottom, #111, #1b1b1b);
+  color: #fff;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.55);
+  transition: border-color .2s, box-shadow .2s;
+}
+#mp-lista-cuchara input:focus, #mp-lista-tenedor input:focus{
+  border-color: #ffcc00;
+  box-shadow: 0 0 8px rgba(255,204,0,.45), inset 0 2px 6px rgba(0,0,0,0.55);
+  outline: none;
+}
+
+/* Responsive: apilar columnas en pantallas chicas */
+@media (max-width: 860px){
+  .mp-two-col{ grid-template-columns: 1fr; }
+}
+
+.cartel-ganador {
+  z-index: 12000; /* subimos aún más */
+}
+
+/* Botones flotantes (arriba derecha) */
+.btn-float{
+  position: static;
+  right: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  font: 600 14px 'Orbitron', sans-serif;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.25);
+  background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06) inset,
+    0 10px 18px rgba(0,0,0,.35),
+    0 0 18px rgba(255, 235, 160, .25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  opacity: .95;
+  z-index: 10000;
+  transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
+}
+.btn-float:hover{ transform: translateY(-2px); opacity: 1 }
+.btn-float:active{ transform: translateY(0) scale(.98) }
+
+/* Colores por función */
+.btn-float.is-settings {background: linear-gradient(135deg, #434343, #000000);}
+.btn-float.is-edit{     background: linear-gradient(135deg, #4e54c8, #8f94fb) }
+.btn-float.is-skip{     background: linear-gradient(135deg, #00c6ff, #0072ff) }
+
+
+/* Diamantes */
+.rack-diamantes{ display:flex; gap:8px; margin-top:6px; }
+.rack-diamantes img.d{ width:28px; opacity:.25; filter:grayscale(1); transition:opacity .2s ease; }
+
+
+/* Efecto “pop en el rack” */
+@keyframes dPop { 
+  0%{ transform: scale(.6); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+  50%{ transform: scale(1.15); filter: drop-shadow(0 0 10px rgba(255,255,255,.8)); }
+  100%{ transform: scale(1); }
+}
+@keyframes rackPulse {
+  0%{ transform: scale(1); }
+  50%{ transform: scale(1.02); }
+  100%{ transform: scale(1); }
+}
+.rack-diamantes img.d.d-pop{ animation: dPop .8s ease; }
+.rack-diamantes.rack-pulse{ animation: rackPulse .5s ease; }
+
+
+/* Overlay Ronda */
+.overlay-ronda{
+  position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+  z-index:12050; pointer-events:none; background:rgba(0,0,0,.35);
+}
+.overlay-ronda .ronda-box{
+  font-family:'Orbitron',sans-serif; font-size:64px; background:rgba(0,0,0,.65);
+  color:#fff; border:3px solid #fff; padding:22px 34px; border-radius:18px;
+  text-shadow:0 0 8px rgba(255,255,255,.4); animation:popRonda 2s ease-out forwards;
+}
+@keyframes popRonda{
+  0%{ transform:scale(.7); opacity:0 } 20%{ transform:scale(1); opacity:1 }
+  80%{ opacity:1 } 100%{ transform:scale(.96); opacity:0 }
+}
+
+/* Overlay Estadísticas Finales */
+.overlay-stats{
+  position:fixed; inset:0; z-index:13000;
+  background: rgba(0,0,0,.70);
+  display:flex; align-items:center; justify-content:center;
+}
+.stats-panel{
+  width:min(920px, 92vw);
+  background: rgba(0,0,0,.7);
+  border: 2px solid rgba(255,255,255,.25);
+  border-radius: 16px;
+  padding: 24px;
+  color:#fff; font-family:'Orbitron', sans-serif; 
+  text-shadow: 0 1px 2px rgba(0,0,0,.6);
+}
+.stats-grid{ 
+  display:grid; grid-template-columns: 1fr 1fr; gap:12px 18px; 
+  margin: 12px 0 18px;
+}
+.mvp-box{ 
+  margin-top: 8px; padding:12px; border-radius:12px; 
+  background: rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.15);
+}
+#overlayStats .ranking { 
+  margin: 12px 0 0; 
+  padding-left: 24px; 
+}
+#overlayStats .ranking li {
+  margin: 6px 0;
+  line-height: 1.2;
+}
+#overlayStats .ranking .pos { 
+  display:inline-block; width: 36px; font-weight: 700; 
+}
+#overlayStats .ranking .badge {
+  display:inline-block; padding:2px 6px; border-radius:999px; 
+  font-size: .85em; margin-left:6px;
+  background: rgba(255,255,255,.15);
+}
+#overlayStats .ranking .badge.cuchara{
+  background: linear-gradient(180deg, #ff3b3b 0%, #b31212 100%);
+  color: #fff;
+  border-color: #ffb3b3;
+  box-shadow: 0 0 10px #ff3b3b66, inset 0 0 8px #ffffff22;
+}
+#overlayStats .ranking .badge.tenedor{
+  background: linear-gradient(180deg, #ffe25c 0%, #caa800 100%);
+  color: #111;                /* mejor contraste sobre amarillo */
+  border-color: #fff1a6;
+  box-shadow: 0 0 10px #ffd40066, inset 0 0 8px #ffffff22;
+}
+
+/* Overlay Estadísticas Finales */
+/* Centrado y jerarquía visual en el panel */
+#overlayStats {
+  position: fixed; inset: 0;
+  display: grid; place-items: center;
+  z-index: 9999;
+}
+.stats-panel{
+  width: min(920px, 92vw);
+  margin: 0 auto;
+  text-align: center;               /* centra todo el contenido */
+  background: radial-gradient(120% 120% at 50% 0%, #120015 0%, #07000b 60%, #000 100%);
+  border: 2px solid #ff66cc;
+  border-radius: 18px;
+  padding: 28px 30px;
+  box-shadow: 0 0 80px #ff4ddb66, inset 0 0 40px #ff4ddb22;
+}
+
+/* Línea del ganador “campeón” */
+.ganador-box{
+  display:flex; align-items:center; justify-content:center;
+  gap: 10px; margin: 12px 0 18px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(18px, 3vw, 26px);
+}
+.ganador-box::before{
+  content: "🏆";
+  font-size: 1.25em;
+  filter: drop-shadow(0 0 8px #ffd700);
+}
+
+/* Rejilla del resto de métricas */
+.stats-grid{
+  display:grid; gap:14px;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  text-align:left;
+  margin-top: 8px;
+}
+@media (max-width:700px){
+  .stats-grid{ grid-template-columns: 1fr; text-align:center; }
+}
+
+
+/* Diamante que “vuela” */
+.diamante-volador{ position:fixed; width:36px; z-index:12060; pointer-events:none; }
+
+/* ——— Inicio: selector de diamantes compacto ——— */
+.contenedor-rondas{
+  margin-top: 10px;
+  text-align: center;
+}
+#selectorDiamantes{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(0,0,0,.55);
+  box-shadow: 0 0 18px rgba(120,0,255,.25) inset;
+  font-size: 22px;                 /* ↓ letra más chica */
+}
+#selectorDiamantes .flecha{ font-size: 22px; padding: 8px 12px; }
+/* ——— Fin: selector de diamantes compacto ——— */
+
+:root{
+  --d-size: 36px;
+  --d-gap: 10px;
+  --d-glow: 0 0 14px rgba(255,255,255,.35);
+  --d-inactive: linear-gradient(#444,#222);
+}
+
+/* Contenedor de diamantes */
+/* Contenedor */
+.diamantes, .rack-diamantes { display:flex; gap:var(--d-gap); align-items:center; justify-content:center; }
+
+/* MÁSCARA: recorta el gradiente con diamond.svg */
+.diamond{
+  width: var(--d-size);
+  aspect-ratio: 1/1;
+  display:inline-block;
+  -webkit-mask: url('./assets/diamond.svg') no-repeat center / contain;
+          mask: url('./assets/diamond.svg') no-repeat center / contain;
+  background: var(--d-inactive);
+  border-radius: 6px;               /* para el glow */
+  filter: drop-shadow(var(--d-glow));
+  opacity: .6;
+  transition: transform .15s, opacity .15s, filter .15s;
+   will-change: transform, filter;
+  transform: translateZ(0); /* fuerza capa acelerada */
+}
+.diamond.activo{ opacity:1; transform:scale(1.06); }
+
+/* 🎨 Colores por equipo */
+.diamond.cuchara{ background: linear-gradient(180deg,#9b5de5,#5f2c82 70%); } /* violeta */
+.diamond.tenedor{ background: linear-gradient(180deg,#4caf50,#2e7d32 70%); } /* verde */
+
+/* Efecto “victoria de ronda” */
+.diamond.win-burst { animation: dBurst .6s ease-out; }
+@keyframes dBurst {
+  0%{ transform: scale(0.2) rotate(-20deg); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+  70%{ transform: scale(1.25) rotate(6deg); filter: drop-shadow(0 0 22px rgba(255,255,255,.9)); }
+  100%{ transform: scale(1.06) rotate(0); }
+}
+
+/* Tamaño + color de diamantes del rack */
+#rackCuchara .d, #rackTenedor .d {
+  width: 42px;          /* antes ~28–32px */
+  margin: 0 4px;
+  filter: grayscale(0.1) brightness(1.1); /* base */
+  transition: transform .25s ease, filter .25s ease;
+}
+
+/* Remarca del “pop” cuando ganan un diamante */
+.rack-pulse { filter: drop-shadow(0 0 16px rgba(255,255,255,.5)); }
+.d-pop { transform: scale(1.1) translateY(-2px); }
+
+/* Tamaño global de los diamantes del “mejor de” */
+.rack-diamantes img.d {
+  width: 64px;          /* antes 36–40px aprox. */
+  height: 64px;
+  margin: 0 6px;
+}
+
+
+/* Los vacíos quedan en gris bajo para contraste */
+.rack-diamantes img.d.vacio { filter: grayscale(100%) opacity(.4); }
+
+/* === COLORES FINALES DE LOS DIAMANTES (forzar prioridad) === */
+
+/* base: todos los slots grises y un poco apagados */
+#rackCuchara .d,
+#rackTenedor .d {
+  width: 42px;
+  margin: 0 4px;
+  opacity: .35;
+  filter: grayscale(100%) brightness(0.95) contrast(1.05) !important;
+  transition: transform .25s ease, filter .25s ease, opacity .2s ease;
+}
+
+
+/* === DIAMANTES CON TRAMA: fondo + facetas === */
+:root{
+  --d-size: 34px;  /* base gris */
+}
+
+/* contenedor de racks (ya lo tenés) */
+.rack-diamantes { display:flex; gap:10px; align-items:center; }
+
+/* capa base (color) recortada por la silueta del SVG */
+.diamond{
+  position: relative;
+  width: var(--d-size);
+  aspect-ratio: 1/1;
+  display:inline-block;
+  -webkit-mask: url('./assets/diamond.svg') no-repeat center / contain;
+          mask: url('./assets/diamond.svg') no-repeat center / contain;
+  background: linear-gradient(180deg,#666,#2e2e2e); /* gris */
+  opacity:.7;
+  transform: scale(1);           /* grises = tamaño base */
+  transition: transform .18s ease, opacity .18s ease, filter .18s ease;
+}
+.diamond > img.facets{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:contain; mix-blend-mode:multiply; opacity:.85;
+}
+
+/* Activo = coloreado por equipo + un poco de vida */
+.diamond.activo{
+  opacity:1;
+  transform: scale(1.22);        /* << más grande que los slots grises */
+  filter: drop-shadow(0 0 10px rgba(255,255,255,.25));
+}
+
+/* Colores por equipo */
+.diamond.cuchara.activo{ background: linear-gradient(180deg,#9b5de5,#5f2c82 70%); } /* violeta */
+.diamond.tenedor.activo{ background: linear-gradient(180deg,#4caf50,#2e7d32 70%); } /* verde */
+
+/* POP al ganar (se añade temporalmente 'win-burst') */
+.diamond.win-burst{ animation: diamondPop .55s ease forwards; }
+@keyframes diamondPop{
+  0%   { transform: scale(0.55) rotate(-10deg); opacity: 0; }
+  38%  { transform: scale(1.42) rotate(4deg);   opacity: 1; }
+  70%  { transform: scale(1.15) rotate(-2deg); }
+  100% { transform: scale(1.22) rotate(0deg); } /* vuelve al tamaño de ACTIVO */
+}
+
+/* 💎 Rebote + brillo al ganar un diamante (sin volar) */
+.diamond.win-burst {
+  position: relative;
+  animation: diamondBounce 650ms ease-out both;
+  filter: drop-shadow(0 0 12px rgba(101, 239, 255, .9)) saturate(1.2);
+}
+
+/* Brillos rápidos encima del diamante */
+.diamond.win-burst::after{
+  content:'';
+  position:absolute; inset:-6px;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.95), transparent 45%) no-repeat,
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.7), transparent 40%) no-repeat,
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,.8), transparent 40%) no-repeat;
+  animation: diamondShine 650ms ease-out forwards;
+  mix-blend-mode: screen;
+  opacity: .0;
+}
+
+@keyframes diamondBounce{
+  0%   { transform: scale(1);    }
+  35%  { transform: scale(1.35); }
+  60%  { transform: scale(.92);  }
+  100% { transform: scale(1);    }
+}
+
+@keyframes diamondShine{
+  0%   { opacity:0; transform: scale(.6) rotate(0deg);   }
+  30%  { opacity:1; transform: scale(1.15) rotate(6deg); }
+  100% { opacity:0; transform: scale(1.6) rotate(-6deg); }
+}
+
+
+/* Vacíos bien neutros y con la trama visible en gris */
+.diamond:not(.activo){ background: linear-gradient(180deg,#5a5a5a,#2b2b2b); }
+.diamond:not(.activo) > img.facets{
+  mix-blend-mode:normal;
+  filter: grayscale(1) brightness(.95) contrast(1.05);
+  opacity:.8;
+}
+
+
+/* Tamaño de los diamantes del rack */
+.rack-diamantes img.d{
+  width: 42px;          /* ← hacelo más grande a gusto (36–48px queda bien) */
+  height: 42px;
+  filter: drop-shadow(0 0 10px rgba(255,255,255,.25));
+  transition: transform .18s ease;
+}
+
+/* “Pop” al aparecer el nuevo diamante */
+.d.pop {
+  animation: diamondPop .55s ease forwards;
+}
+@keyframes diamondPop {
+  0%   { transform: scale(0.60) rotate(-8deg); opacity: 0; }
+  40%  { transform: scale(1.25) rotate(3deg);  opacity: 1; }
+  70%  { transform: scale(0.95) rotate(-2deg); }
+  100% { transform: scale(1)   rotate(0); }
+}
+
+.btn-juego {
+  background: linear-gradient(135deg, #ff5f6d, #ffc371); /* degradado vistoso */
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  margin: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.btn-juego:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+}
+
+.btn-juego:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+
+/* Contenedor de acciones arriba-derecha */
+#panel-acciones{
+  position: fixed; top:16px; right:20px;
+  display:flex; flex-direction:column; gap:14px;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;               /* separa los botones */
+  z-index: 10000;
+}
+
+
+
+/* Botones (reusa tu estilo actual) */
+.btn-float{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  font: 600 14px 'Orbitron', sans-serif;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.25);
+  background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset, 0 10px 18px rgba(0,0,0,.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: transform .15s ease, opacity .2s ease;
+}
+.btn-float:hover{ transform: translateY(-2px); opacity: 1 }
+.btn-float.is-settings {
+  background: linear-gradient(135deg, #434343, #000000);}
+.btn-float.is-edit{     background: linear-gradient(135deg,#4e54c8,#8f94fb) }
+.btn-float.is-skip{     background: linear-gradient(135deg,#00c6ff,#0072ff) }
+
+/* Responsive: compacta un poco en pantallas chicas */
+@media (max-width: 900px){
+  #panel-acciones{ top: 10px; right: 10px; gap: 10px }
+  .btn-float{ padding: 8px 12px; font-size: 13px }
+}
+
+/* Contenedor de botones arriba derecha */
+#panel-acciones {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px; /* separa los botones */
+  z-index: 10000;
+}
+
+/* Estilo común */
+.btn-float {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  font: 600 14px 'Orbitron', sans-serif;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.25);
+  background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset, 0 10px 18px rgba(0,0,0,.35);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: transform .15s ease, opacity .2s ease;
+}
+.btn-float:hover { transform: translateY(-2px); opacity: 1 }
+
+/* Colores individuales */
+.btn-float.is-settings .btn-float.is-settings {
+  background: linear-gradient(135deg, #434343, #000000);}
+
+.btn-float.is-edit     { background: linear-gradient(135deg, #4e54c8, #8f94fb); }
+.btn-float.is-skip     { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+
+/* === PUNTAJE: animaciones de ganar/perder === */
+.puntaje {
+  position: relative;           /* para el anillo */
+  overflow: visible;            /* deja ver el anillo */
+}
+
+/* Anillo expansivo */
+.puntaje::after {
+  content: "";
+  position: absolute;
+  inset: -6px;                  /* un poquito más grande que el cuadro */
+  border-radius: 14px;
+  border: 3px solid transparent;
+  transform: scale(0.8);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Cuando gana: verde */
+.puntaje.gana {
+  animation: scoreBounce 500ms ease-out;
+  box-shadow: 0 0 0 0 rgba(30, 215, 96, 0.0);
+  background: rgba(0, 40, 0, 0.35);
+}
+.puntaje.gana::after {
+  border-color: rgba(30, 215, 96, 0.95);
+  animation: ringOut 600ms ease-out;
+}
+
+/* Cuando pierde: rojo */
+.puntaje.pierde {
+  animation: scoreShake 480ms ease;
+  background: rgba(40, 0, 0, 0.35);
+}
+.puntaje.pierde::after {
+  border-color: rgba(255, 82, 82, 0.95);
+  animation: ringOut 600ms ease-out;
+}
+
+/* Keyframes */
+@keyframes scoreBounce {
+  0%   { transform: scale(1);   filter: brightness(1);   }
+  35%  { transform: scale(1.15); filter: brightness(1.25);}
+  60%  { transform: scale(0.97); filter: brightness(1.1); }
+  100% { transform: scale(1);   filter: brightness(1);   }
+}
+
+@keyframes scoreShake {
+  0%   { transform: translateX(0);      }
+  20%  { transform: translateX(-6px);   }
+  40%  { transform: translateX(6px);    }
+  60%  { transform: translateX(-4px);   }
+  80%  { transform: translateX(3px);    }
+  100% { transform: translateX(0);      }
+}
+
+@keyframes ringOut {
+  0%   { transform: scale(0.7); opacity: 0.9; }
+  70%  { transform: scale(1.15); opacity: 0.35; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+
+
+/* --- Tinte a pantalla por diamante --- */
+#tinteDiamante {
+  position: fixed; inset: 0;
+  pointer-events: none;         /* no bloquea clicks */
+  opacity: 0;                   /* oculto por defecto */
+  transition: opacity .25s ease;
+  z-index: 9990;                /* debajo de carteles/overlays (9999) pero sobre el fondo */
+  mix-blend-mode: screen;       /* suma brillo/color sin tapar todo */
+  backdrop-filter: saturate(1.2) brightness(1.05);
+  will-change: opacity, backdrop-filter;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: paint;
+}
+#tinteDiamante.show { opacity: .6; }      /* intensidad del tinte */
+
+#tinteDiamante.cuchara {
+  background: radial-gradient(circle at 50% 50%,
+              rgba(178,102,255,0.35) 0%,
+              rgba(120, 50, 200,0.65) 40%,
+              rgba(0,0,0,0.0) 100%);
+}
+#tinteDiamante.tenedor {
+  background: radial-gradient(circle at 50% 50%,
+              rgba(60,220,120,0.35) 0%,
+              rgba(20,160,90,0.65) 40%,
+              rgba(0,0,0,0.0) 100%);
+}
+
+/* Pequeño pulso para dar “impacto” */
+@keyframes pulsoTinte {
+  0%   { opacity: 0;   }
+  30%  { opacity: .7;  }
+  60%  { opacity: .5;  }
+  100% { opacity: .0;  }
+}
+#tinteDiamante.pulse { animation: pulsoTinte 900ms ease-out; }
+
+#cineDiamanteOverlay{
+  /* antes tenía un radial con blanco; lo saco */
+  background: radial-gradient(circle at 50% 50%,
+              rgba(0,0,0,0.35) 0%,
+              rgba(0,0,0,0.6) 60%,
+              rgba(0,0,0,0.7) 100%);
+}
+
+.streak-icons {
+  position: absolute;
+  right: -32px; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.streak-icon {
+  width: 22px; height: 22px;
+  opacity: .25; filter: grayscale(100%);
+  transition: opacity .2s, transform .2s, filter .2s;
+}
+.streak-icon.is-on {
+  opacity: 1; filter: none; transform: scale(1.05);
+}
+
+.escudo-wrap { 
+  position: relative; 
+  display: inline-block; 
+}
+
+
+.streak-icon {
+  width: 22px; height: 22px;
+  opacity: .25; filter: grayscale(100%);
+  transition: opacity .2s, transform .2s, filter .2s;
+}
+
+.streak-icon.is-on {
+  opacity: 1; filter: none; transform: scale(1.05);
+}
+
+.bonus-msg {
+  position: absolute;
+  top: 20px;                     /* subilo/bajalo a gusto */
+  left: calc(100% + 10px);       /* 👈 siempre a la derecha de los 3 iconos */
+  right: auto;                   /* anula cualquier right previo */
+  white-space: nowrap;           /* que no salte de línea */
+  z-index: 3;                    /* por si hay sombras cerca */
+  font-size: 20px;
+  font-weight: bold;
+  color: gold;
+  opacity: 0;
+  transform: translateY(0) scale(0.8);
+  pointer-events: none;
+}
+
+
+.bonus-msg.show {
+  animation: bonusPop 1.5s ease forwards;
+}
+
+@keyframes bonusPop {
+  0%   { opacity: 0; transform: translateY(0) scale(0.8); }
+  20%  { opacity: 1; transform: translateY(-6px) scale(1.1); }
+  80%  { opacity: 1; transform: translateY(-12px) scale(1); }
+  100% { opacity: 0; transform: translateY(-20px) scale(0.9); }
+}
+
+.qr-container{
+  position:absolute;
+  bottom:20px;
+  right:24px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  z-index:30;
+}
+
+.qr-glow{
+  position:absolute;
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  filter: blur(22px);
+  opacity:.55;
+  background: radial-gradient(circle at 50% 50%,
+              rgba(255,140,0,.75) 0%,
+              rgba(255, 99, 71,.55) 40%,
+              rgba(255, 215, 0,.25) 70%,
+              rgba(0,0,0,0) 75%);
+  transform: translateY(6px);
+  pointer-events:none;
+  animation: qrGlowPulse 3.8s ease-in-out infinite;
+}
+
+#qr-root{
+  width:180px;
+  height:180px;
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow: 0 0 18px rgba(255,140,0,.45),
+              0 0 40px rgba(255,140,0,.25) inset;
+  backdrop-filter: blur(2px);
+  animation: fadeIn .9s ease .2s both;
+}
+
+.qr-label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
+  color:#fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,.45);
+  opacity:.92;
+  user-select:none;
+}
+
+.qr-label b{ font-weight:800; letter-spacing:.2px; }
+.qr-star{ color:#ff8c00; filter: drop-shadow(0 0 6px rgba(255,140,0,.8)); }
+
+@keyframes fadeIn{
+  from{ opacity:0; transform: translateY(8px) scale(.98); }
+  to  { opacity:1; transform: translateY(0) scale(1); }
+}
+@keyframes qrGlowPulse{
+  0%,100%{ transform: translateY(6px) scale(1);   opacity:.55; }
+  50%    { transform: translateY(6px) scale(1.06); opacity:.78; }
+}
+
+@media (max-width: 720px){
+  .qr-container{ right:12px; bottom:12px; }
+  #qr-root{ width:150px; height:150px; }
+  .qr-glow{ width:190px; height:190px; }
+}
+
+.carta-animada,
+#cronometro.animar-entrada,
+.turno-animado {
+  will-change: transform, opacity;
+}
+
+
+
+</style>
+</head>
+<body>
+    <div class="filtro"></div>
+<main>
+  <div id="zonaJuego">
+    <!-- Overlay de RONDA -->
+  <div id="overlayRonda" class="overlay-ronda" style="display:none;">
+  <div class="ronda-box" id="textoRonda">RONDA 1</div>
+  </div>
+
+  <!-- IZQUIERDA: escudos en columna -->
+  <div class="zona-izquierda">
+    <div class="equipo equipo-cuchara" id="equipo-cuchara">
+      <div class="escudo-wrap">
+        <img id="escudo-cuchara" class="escudo" src="./assets/escudo_team_cuchara.png" alt="Team Cuchara">
+        <div class="streak-icons">
+          <img id="streakIcon-cuchara-1" class="streak-icon" src="assets/ticket.svg" alt="">
+          <img id="streakIcon-cuchara-2" class="streak-icon" src="assets/chair.svg" alt="">
+          <img id="streakIcon-cuchara-3" class="streak-icon" src="assets/popcorn.svg" alt="">
+          <!-- Mensaje de bonus -->
+          <div class="bonus-msg" id="bonusMsg-cuchara">+1 Bonus Racha!</div>
+        </div>
+      </div>
+      <div class="puntaje" id="puntajeCuchara">0</div>
+      <div class="rack-diamantes" id="rackCuchara"></div>
+      <div class="diamantes" id="diamantesCuchara"></div>
+    </div>
+    <div class="equipo" id="equipo-tenedor">
+      <div class="escudo-wrap">
+        <img id="escudo-tenedor" class="escudo" src="./assets/escudo_team_tenedor.png" alt="Team Tenedor">
+        <div class="streak-icons">
+          <img id="streakIcon-tenedor-1" class="streak-icon" src="assets/ticket.svg" alt="">
+          <img id="streakIcon-tenedor-2" class="streak-icon" src="assets/chair.svg" alt="">
+          <img id="streakIcon-tenedor-3" class="streak-icon" src="assets/popcorn.svg" alt="">
+          <!-- Mensaje de bonus -->
+          <div class="bonus-msg" id="bonusMsg-tenedor">+1 Bonus Racha!</div>
+        </div>
+      </div>
+      <div class="puntaje" id="puntajeTenedor">0</div>
+      <div class="rack-diamantes" id="rackTenedor"></div>
+      <div class="diamantes" id="diamantesTenedor"></div>
+    </div>
+  </div>
+
+  <!-- DERECHA: carta, video y botones -->
+  <div class="zona-central">
+    <button id="btn-sacar" onclick="sacarCarta()">👉 Sacar Carta</button>
+    <button id="btn-listo" style="display: none;" onclick="iniciarCronometro()">🎬 Estoy Listo</button>
+    <div id="cartaContainer"></div>
+    <video id="cronometro" muted playsinline preload="auto">
+    <source id="srcWebm" src="" type="video/webm">
+    <source id="srcMp4"  src="" type="video/mp4">
+    </video>
+    <button id="btn-detener" style="display:none" onclick="detenerCronometro()">✋ Detener</button>
+    <div id="resultado"></div>
+    <button id="btn-reset" onclick="resetearJuego()" style="display:none;">↩︎ Resetear</button>
+    <button id="btn-fullscreen" onclick="alternarPantallaCompleta()" style="display:none;">🖥</button>
+
+    <div id="panel-acciones">
+    <button id="btn-ajustes" class="btn-float is-settings" onclick="togglePanelAjustes()">⚙️ Ajustes</button>
+    <button id="btn-skip" class="btn-float is-skip" onclick="saltarJugadorActual()">⏭️ Saltar jugador</button>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+
+  <div id="puntajeFantasma"></div>
+
+  
+  <div id="popupConfirmacion" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 999; justify-content: center; align-items: center;">
+  <div class="popup-inner" style="background: #fff; color: #000; padding: 20px; border-radius: 12px; text-align: center; max-width: 300px;">
+    <p style="font-size: 20px; margin-bottom: 20px;">¿Adivinaron correctamente la película?</p>
+    <button onclick="responderConfirmacion(true)" style="font-size: 18px; padding: 10px 20px; margin: 5px; border: none; border-radius: 10px; background-color: #28a745; color: white;">😄 Sí</button>
+    <button onclick="responderConfirmacion(false)" style="font-size: 18px; padding: 10px 20px; margin: 5px; border: none; border-radius: 10px; background-color: #dc3545; color: white;">😭 No</button>
+  </div>
+</div>
+
+
+<!-- POPUP: SACRIFICIO -->
+<div id="popupSacrificio"
+     style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:9999; justify-content:center; align-items:center;">
+  <div class="popup-inner"
+       style="background:#000; color:#fff; padding:20px; border-radius:12px; text-align:center; max-width:340px; width:90%; box-shadow:0 0 30px rgba(255,0,0,.65);">
+    <div style="font-size:22px; margin-bottom:10px;">🩸 SACRIFICIO</div>
+    <p style="font-size:16px; margin:6px 0 10px;">
+      ¿Sumar <b>+30s</b> al turno a cambio de ceder <b>-1 punto</b>?
+    </p>
+    <p style="font-size:13px; opacity:.85; margin:0 0 16px;">
+    </p>
+    <div style="display:flex; gap:10px; justify-content:center;">
+      <button class="btn-aceptar-sacrificio"
+              onclick="aceptarSacrificio()"
+              style="padding:10px 16px; border-radius:10px; border:2px solid #fff; background:linear-gradient(to bottom,#ff7a7a,#d62828); color:#fff; font-family:'Orbitron',sans-serif;">
+        Sí, +30s
+      </button>
+      <button class="btn-cancelar-sacrificio"
+              onclick="cancelarSacrificio()"
+              style="padding:10px 16px; border-radius:10px; border:2px solid #777; background:#333; color:#fff; font-family:'Orbitron',sans-serif;">
+        No, jugar 1:30
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- === POPUP VISUAL PARA EDITAR PUNTAJE === -->
+<div id="popupPuntaje">
+  <div class="box">
+    <h3>Editar Puntaje</h3>
+
+    <div class="p-row">
+      <div class="p-label">CUCHARA</div>
+      <input id="inpCuchara" class="p-input" type="number" readonly>
+      <div class="p-steps">
+        <button type="button" onclick="stepScore('cuchara', -1)">−1</button>
+        <button type="button" onclick="stepScore('cuchara', +1)">+1</button>
+      </div>
+    </div>
+
+    <div class="p-row">
+      <div class="p-label">TENEDOR</div>
+      <input id="inpTenedor" class="p-input" type="number" readonly>
+      <div class="p-steps">
+        <button type="button" onclick="stepScore('tenedor', -1)">−1</button>
+        <button type="button" onclick="stepScore('tenedor', +1)">+1</button>
+      </div>
+    </div>
+
+    <div class="p-actions">
+      <button class="ok" onclick="aplicarEditorPuntaje()">Aplicar</button>
+      <button class="cancel" onclick="cerrarEditorPuntaje()">Cancelar</button>
+    </div>
+    <div style="margin-top:8px; font-size:11px; opacity:.7;">Tip: tecla <strong>E</strong> para abrir • <strong>Esc</strong> para cerrar</div>
+  </div>
+</div>
+
+
+
+  <script>
+    let cartaActual = null;
+    // ===== DOBLE FUNCIÓN – estado =====
+    let dobleFuncion = {
+    activo: false,
+    rondasPendientes: 0  // se cuenta 2 → 1 → 0
+    };
+    let ultimaCartaNombre = "";
+    let video = document.getElementById("cronometro");
+    // === Helpers para soporte WEBM+MP4 ===
+    function setCronometro(baseName) {
+      // baseName = nombre SIN extensión (p.ej. "jugada_normal")
+      const video = document.getElementById("cronometro");
+      const sWebm = document.getElementById("srcWebm");
+      const sMp4  = document.getElementById("srcMp4");
+
+      // Pausar y limpiar antes de cambiar fuentes
+      try { video.pause(); } catch(e){}
+      video.classList.remove("visible");
+      video.removeAttribute("src"); // por compat, aunque usamos <source>
+      video.load();
+
+      // Setear nuevas fuentes
+      if (sWebm) sWebm.src = `videos/${baseName}.webm`;
+      if (sMp4)  sMp4.src  = `videos/${baseName}.mp4`;
+
+      // Forzar recarga con las nuevas sources
+      video.load();
+    }
+
+
+          // 🔥 Precalentar el video del cronómetro para evitar lag en el primer uso
+      (function prewarmCronometro(){
+        const v = document.getElementById("cronometro");
+        if (!v) return;
+        try {
+          v.muted = true;
+          v.play().then(()=>{
+            v.pause();
+            v.currentTime = 0;
+          });
+        } catch(e){}
+      })();
+
+
+    function isCronometro(baseName) {
+      // Devuelve true si el <video> actual es ese baseName (sea webm o mp4)
+      const v = document.getElementById("cronometro");
+      const cur = (v.currentSrc || v.src || "").toLowerCase();
+      // Aceptamos que termine en .webm o .mp4
+      return cur.endsWith(`/videos/${baseName}.webm`) || cur.endsWith(`/videos/${baseName}.mp4`);
+  }
+
+    video.addEventListener("ended", () => {
+      // Si falla la carga de DF, caemos a jugada normal para no frenar el juego
+video.addEventListener('error', () => {
+  const tieneDF = (video.currentSrc || video.src || '').toLowerCase().endsWith('/videos/doble_funcion.mp4');
+  if (dobleFuncion.activo && tieneDF) {
+    console.warn('[DF] No se pudo cargar doble_funcion.mp4, uso jugada_normal.mp4 como respaldo.');
+    video.pause();
+    video.removeAttribute('src');
+    video.classList.remove('visible');
+   
+    setCronometro('jugada_normal');
+    video.load();
+  }
+}, { passive: true });
+
+    if (!respuestaYaRegistrada) {
+    ocultarDetener();                     // 👈 NUEVO
+    responderConfirmacion(false);
+    }
+    });
+
+    let puntajeCuchara = 0;
+    let puntajeTenedor = 0;
+    let turnoCuchara = true;
+    let __cambioDeTab = false; // flag para saber si venimos de cambiar de pestaña
+    
+// === Turnos dentro de la ronda (para acotar DOBLE FUNCIÓN) ===
+    const LIMITE_TURNOS_DF = 3;  // DF sólo puede salir en los primeros 4 turnos (0..3)
+    const MARGEN_META_DF = 6;    // 👈 porque DF puede dar hasta 6 puntos
+    
+    /* =========================
+   PARTICIPANTES – ESTADO
+========================= */
+const participantes = { cuchara: [], tenedor: [] };
+const idxJugador = { cuchara: 0, tenedor: 0 };
+let modalParticipantesAbierto = false;
+
+
+/* ====== Estadística por jugador (MVP Mímica) ====== */
+const statsJugadores = { cuchara: {}, tenedor: {} };
+// puntaje del equipo al INICIO del turno actual (para calcular delta al cerrar turno)
+const snapshotInicioTurno = { cuchara: 0, tenedor: 0 };
+
+// ——— SFX manager simple (robusto) ———
+function stopAudios(arr){
+  arr.forEach(a => { if (!a) return; try { a.pause(); a.currentTime = 0; } catch {} });
+}
+
+function playSfxDiamantePrioritario(){
+  // Buscar SIEMPRE en el momento de reproducir (evita null si el DOM aún no tenía <audio>)
+  const sc  = document.getElementById('sonidoCorrecto');
+  const si  = document.getElementById('sonidoIncorrecto');
+  const sr  = document.getElementById('sonidoRayo');
+  const sp  = document.getElementById('sonidoPopup');
+  const sx  = document.getElementById('sonidoIntercambio');
+  const sv  = document.getElementById('sonidoVictoria');
+  const sfx = document.getElementById('sfxDiamante');
+
+  // Cortar cualquier otro SFX para priorizar el diamante
+  stopAudios([sc, si, sr, sp, sx, sv]);
+
+  if (sfx) {
+    try {
+      sfx.currentTime = 0;
+      sfx.volume = 1;
+      sfx.play().catch(()=>{});
+    } catch {}
+  }
+}
+
+// precarga ligera del audio cuando el DOM está listo (opcional)
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('sfxDiamante')?.load();
+});
+
+// ——— Warmup DIAMANTE (audio + animación) ———
+let _diamanteWarmed = false;
+function warmupDiamanteFX(){
+  if (_diamanteWarmed) return;
+  _diamanteWarmed = true;
+
+  // 1) Prime de AUDIO (silencioso y en pausa) — necesita gesto del usuario
+  try {
+    if (sfxDiamante) {
+      const prevVol = sfxDiamante.volume;
+      sfxDiamante.volume = 0;
+      sfxDiamante.play().then(()=>{
+        sfxDiamante.pause();
+        sfxDiamante.currentTime = 0;
+        sfxDiamante.volume = prevVol;
+      }).catch(()=>{ /* ignoramos bloqueo si no hubo gesto aún */ });
+    }
+  } catch(_) {}
+
+  // 2) Prime de ANIMACIÓN: ejecutamos una vez fuera de pantalla
+  try {
+    const dummy = document.createElement('span');
+    dummy.className = 'diamond cuchara win-burst';
+    dummy.style.position = 'fixed';
+    dummy.style.left = '-9999px';
+    dummy.style.top  = '-9999px';
+
+    const facets = document.createElement('img');
+    facets.className = 'facets';
+    facets.src = './assets/diamond.svg';
+    dummy.appendChild(facets);
+
+    document.body.appendChild(dummy);
+    // sacamos la clase tras el primer ciclo
+    setTimeout(()=> {
+      dummy.classList.remove('win-burst');
+      document.body.removeChild(dummy);
+    }, 800);
+  } catch(_) {}
+
+  // 3) Hint extra: forzamos carga del SVG por si el mask lo requiere
+  const img = new Image();
+  img.src = './assets/diamond.svg';
+
+  // 4) Warm-up del overlay de tinte (compila blend/backdrop)
+  try {
+    const el = document.getElementById('tinteDiamante');
+    if (el) {
+      el.classList.add('cuchara');      // cualquier color
+      el.style.visibility = 'hidden';   // que no se vea
+      // dos frames para asegurar composición
+      requestAnimationFrame(()=> {
+        el.classList.add('show');       // dispara la transition + filtros
+        requestAnimationFrame(()=> {
+          el.classList.remove('show','cuchara');
+          el.style.visibility = '';
+        });
+      });
+    }
+  } catch(_){}
+
+
+}
+
+
+
+function registrarAciertosJugador(equipo, nombre, delta){
+  if (!nombre || nombre === '—') return;
+  const mapa = statsJugadores[equipo] || (statsJugadores[equipo] = {});
+  if (delta > 0) mapa[nombre] = (mapa[nombre] || 0) + delta;
+}
+
+function renderMVP(){
+  // opcional si querés mostrar MVP durante el juego (fuera del final)
+  const box = document.getElementById('mvp-box');
+  if (!box) return;
+  let topN = '—', topP = 0, topEq = '';
+  ['cuchara','tenedor'].forEach(eq=>{
+    for (const [n,p] of Object.entries(statsJugadores[eq]||{})){
+      if (p > topP){ topP = p; topN = n; topEq = eq; }
+    }
+  });
+  if (topP > 0){
+    box.classList.remove('hidden');
+    document.getElementById('mvp-nombre')?.replaceChildren(document.createTextNode(topN));
+    const s = (topP===1?' acierto':' aciertos');
+    document.getElementById('mvp-puntos')?.replaceChildren(document.createTextNode(` — ${topP}${s} (${topEq.toUpperCase()})`));
+  }else{
+    box.classList.add('hidden');
+  }
+}
+
+/* ====== Ranking de Mímica (mejor → peor) ====== */
+function getRankingMimica() {
+  const filas = [];
+  ['cuchara','tenedor'].forEach(eq => {
+    const mapa = statsJugadores[eq] || {};
+    for (const [nombre, puntos] of Object.entries(mapa)) {
+      filas.push({ nombre, equipo: eq, puntos });
+    }
+  });
+  // Orden: puntos desc, y si empatan, por nombre asc
+  filas.sort((a, b) => (b.puntos - a.puntos) || a.nombre.localeCompare(b.nombre));
+  return filas;
+}
+
+function renderRankingMimica() {
+  const host = document.getElementById('ranking-mimica');
+  if (!host) return;
+  const data = getRankingMimica();
+
+  if (!data.length) {
+    host.innerHTML = '<li>— (sin datos)</li>';
+    return;
+  }
+
+  host.innerHTML = data.map((r, i) => (
+    `<li>
+       <span class="pos">#${i+1}</span>
+       <strong>${r.nombre}</strong>
+       — ${r.puntos} acierto${r.puntos!==1?'s':''}
+       <span class="badge ${r.equipo}">${r.equipo.toUpperCase()}</span>
+     </li>`
+  )).join('');
+}
+
+
+/* Botón en la Intro (con fallback si no existe .pantalla-inicio) */
+function montarBotonParticipantesEnIntro(){
+  // Si ya existe, no dupliques
+  if (document.getElementById('btn-participantes-intro')) return;
+
+  // Host por defecto: la capa de intro; si no existe, usamos <body>
+  const host = document.querySelector('.pantalla-inicio') || document.body;
+
+  const btn = document.createElement('button');
+  btn.id = 'btn-participantes-intro';
+  btn.type = 'button';
+  btn.textContent = '➕ Participantes';
+  btn.addEventListener('click', abrirModalParticipantes);
+
+  // Si estamos colgando del <body>, lo posicionamos fijo (mismo look)
+  if (host === document.body) {
+    btn.style.position = 'fixed';
+    btn.style.left = '50%';
+    btn.style.bottom = '32px';
+    btn.style.transform = 'translateX(-50%)';
+    btn.style.zIndex = '10001';
+  }
+
+  host.appendChild(btn);
+}
+
+
+/* Banner superior “Quién juega” */
+function mostrarTurnOwner(nombre, equipo){
+  const banner = document.getElementById('turn-owner');
+  const nameEl = document.getElementById('turn-owner-name');
+  if (!banner || !nameEl) return;
+  nameEl.textContent = nombre || '—';
+  banner.style.display = 'block';
+  // Acompaña tu estilizado de fondo por turno:
+  document.body.classList.remove('turno-cuchara','turno-tenedor');
+  document.body.classList.add(equipo === 'cuchara' ? 'turno-cuchara' : 'turno-tenedor');
+}
+
+/* Obtiene el nombre del jugador activo según el equipo de turno */
+function jugadorActual(){
+  const equipo = turnoCuchara ? 'cuchara' : 'tenedor';
+  const lista = participantes[equipo];
+  if (!lista.length) return { nombre: '—', equipo };
+  const i = idxJugador[equipo] % lista.length;
+  return { nombre: lista[i] || '—', equipo };
+}
+
+/* Avanza al siguiente jugador del equipo indicado */
+function avanzarJugador(equipo){
+  if (!participantes[equipo] || participantes[equipo].length === 0) return;
+  idxJugador[equipo] = (idxJugador[equipo] + 1) % participantes[equipo].length;
+}
+
+/* Llamar cada vez que CAMBIA el turno (cuchara↔tenedor) */
+function actualizarBannerPorTurno(){
+  const { nombre, equipo } = jugadorActual();
+  mostrarTurnOwner(nombre, equipo);
+}
+
+/* === Texto automático del botón "Sacar Carta" cuando está bloqueado === */
+function etiquetaBtnSacar() {
+  // Podés sumar condiciones globales acá si querés, ej: si hay un modal abierto
+  const n = (cartaActual && cartaActual.nombre) || "";
+  switch (n) {
+    case "DESCARGA ELECTRICA":      return "⚡ En juego";
+    case "CARTA FANTASMA V2":       return "👻 En juego";
+    case "DOBLE FUNCION":           return "🎬 En juego";
+    case "SACRIFICIO":              return "🩸 En juego";
+    case "CAMBIAZO":                return "🎭 En juego";
+    default:                        return "⏳ En juego";
+  }
+}
+
+function setBotonSacarEstado(disabled, label) {
+  const b = document.getElementById("btn-sacar");
+  if (!b) return;
+  b.disabled = !!disabled;
+  b.innerText = disabled ? (label || etiquetaBtnSacar()) : "👉 Sacar Carta";
+}
+
+/* Observa cualquier cambio al atributo "disabled" y ajusta el texto */
+(function () {
+  const b = document.getElementById("btn-sacar");
+  if (!b) return;
+  const aplicar = () => {
+    if (b.disabled) {
+      b.innerText = etiquetaBtnSacar();
+    } else {
+      b.innerText = "👉 Sacar Carta";
+    }
+  };
+  new MutationObserver(aplicar).observe(b, { attributes: true, attributeFilter: ["disabled"] });
+  aplicar(); // estado inicial
+})();
+
+
+
+function generarCamposNombresEquipo(equipo, usarPrev = true){
+  const cont = document.getElementById(equipo === 'cuchara' ? 'mp-lista-cuchara' : 'mp-lista-tenedor');
+  const inputCant = document.getElementById(equipo === 'cuchara' ? 'mp-cantidad-cuchara' : 'mp-cantidad-tenedor');
+  const cant = Math.max(1, parseInt(inputCant.value || '0', 10));
+
+  // preservar lo tecleado si solo cambias cantidad
+  const prev = [];
+  if (usarPrev){
+    cont.querySelectorAll('input').forEach(inp => prev.push(inp.value));
+  }
+
+  cont.innerHTML = '';
+  for (let i=0; i<cant; i++){
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.placeholder = `Jugador ${i+1} (${equipo})`;
+    inp.maxLength = 24;
+
+    if (usarPrev && prev[i]) {
+      inp.value = prev[i];
+    } else if (participantes[equipo] && participantes[equipo][i]) {
+      inp.value = participantes[equipo][i];
+    }
+
+    // Enter → siguiente campo de la misma columna
+    inp.addEventListener('keydown', (ev)=>{
+      if (ev.key === 'Enter'){
+        if (i < cant - 1) cont.children[i+1].focus();
+        else document.getElementById('mp-guardar')?.focus();
+      }
+    });
+
+    cont.appendChild(inp);
+  }
+}
+
+function guardarNombresEquipo(equipo){
+  const cont = document.getElementById(equipo === 'cuchara' ? 'mp-lista-cuchara' : 'mp-lista-tenedor');
+  const lista = [];
+  cont.querySelectorAll('input').forEach(inp=>{
+    const v = (inp.value || '').trim();
+    if (v) lista.push(v);
+  });
+  participantes[equipo] = lista;
+  if (idxJugador[equipo] >= lista.length) idxJugador[equipo] = 0; // clamp
+}
+
+
+
+
+/* ========== MODAL ========= */
+function abrirModalParticipantes(){
+  const modal = document.getElementById('modal-participantes');
+  if (!modal) return;
+  modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden','false');
+  modalParticipantesAbierto = true;
+
+  // setear cantidades desde lo guardado (o 2 por defecto)
+  document.getElementById('mp-cantidad-cuchara').value = participantes.cuchara.length || 2;
+  document.getElementById('mp-cantidad-tenedor').value = participantes.tenedor.length || 2;
+
+  // Generar campos (sin arrastrar restos)
+  generarCamposNombresEquipo('cuchara', false);
+  generarCamposNombresEquipo('tenedor', false);
+
+  bloquearUI(true);
+
+  // foco al primer input
+  const primero = document.querySelector('#mp-lista-cuchara input, #mp-lista-tenedor input');
+  if (primero) primero.focus();
+}
+
+function cerrarModalParticipantes(){
+  const modal = document.getElementById('modal-participantes');
+  if (!modal) return;
+  modal.style.display = 'none';
+  modal.setAttribute('aria-hidden','true');
+  modalParticipantesAbierto = false;
+  bloquearUI(false);
+}
+
+// Botón Guardar (centraliza el guardado y cierre)
+function guardarYcerrarModal(){
+  guardarNombresEquipo('cuchara');
+  guardarNombresEquipo('tenedor');
+  actualizarBannerPorTurno();
+  cerrarModalParticipantes();
+}
+
+/* Enganche robusto: listeners de cantidad + botones */
+function wiringModalParticipantes(){
+  const inpCantC = document.getElementById('mp-cantidad-cuchara');
+  const inpCantT = document.getElementById('mp-cantidad-tenedor');
+
+  const regenC = ()=> generarCamposNombresEquipo('cuchara', true);
+  const regenT = ()=> generarCamposNombresEquipo('tenedor', true);
+
+  ['change','input'].forEach(evt=>{
+    inpCantC?.addEventListener(evt, regenC);
+    inpCantT?.addEventListener(evt, regenT);
+  });
+
+  // Botones (HTML + refuerzo JS)
+  const bGuardar = document.getElementById('mp-guardar');
+  const bCerrar  = document.getElementById('mp-cerrar');
+
+  bGuardar?.addEventListener('click', (ev)=>{ ev.preventDefault(); guardarYcerrarModal(); });
+  bCerrar?.addEventListener('click',  (ev)=>{ ev.preventDefault(); guardarYcerrarModal(); }); // si querés que Cerrar guarde; si no, usa cerrarModalParticipantes()
+}
+
+/* Llamalo cuando el DOM esté listo */
+document.addEventListener('DOMContentLoaded', wiringModalParticipantes);
+
+
+
+
+
+/* Guardar nombres del equipo actual */
+function guardarNombresEquipoActual(){
+  const cant = parseInt(document.getElementById('mp-cantidad').value || '0', 10);
+  const cont = document.getElementById('mp-lista-nombres');
+  const lista = [];
+  for (let i=0; i<cant; i++){
+    const val = (cont.children[i]?.value || '').trim();
+    if (val) lista.push(val);
+  }
+  participantes[equipoTabActivo] = lista;
+  // Reseteo índices si cambia la cantidad
+  idxJugador[equipoTabActivo] = 0;
+}
+
+/* Tabs (Cuchara / Tenedor) */
+function setEquipoTab(equipo){
+  // Antes de irnos, guardamos lo que esté escrito en la pestaña actual
+  guardarNombresEquipoActual();
+
+  equipoTabActivo = equipo;
+  __cambioDeTab = true; // 👈 marcamos que hubo cambio de tab
+
+  document.querySelectorAll('.mp-tab').forEach(b=>{
+    b.classList.toggle('mp-active', b.dataset.team === equipo);
+  });
+
+  // Mostrar la cantidad guardada para ese equipo (o 1 si aún no hay)
+  const cantGuardada = (participantes[equipo]?.length || 1);
+  document.getElementById('mp-cantidad').value = Math.max(1, cantGuardada);
+
+  // Al cambiar de tab, regeneramos SIN reutilizar lo que estaba en la otra pestaña
+  generarCamposNombres(false); // 👈 false = ignorar "prev" del DOM
+}
+
+
+/* Bloquear *todos* los atajos mientras el popup está abierto,
+   pero dejar escribir dentro de los campos del modal. */
+window.addEventListener('keydown', (ev) => {
+  if (!modalParticipantesAbierto) return;
+
+  const tag  = (ev.target?.tagName || '').toLowerCase();
+  const type = (ev.target?.type || '').toLowerCase();
+
+  // ¿Es un campo donde se escribe?
+  const esCampoEscritura =
+    (tag === 'input'  && ['text','number','search','email','password','tel','url'].includes(type)) ||
+    (tag === 'textarea');
+
+  if (esCampoEscritura) {
+    // Dejá que el input reciba la tecla, pero NO dejes que suba a handlers globales.
+    ev.stopPropagation();
+    return; // no preventDefault para que escriba normal
+  }
+
+  // Fuera de campos: bloqueá TODO salvo navegación por foco básica (Tab / Shift+Tab)
+  const clave = ev.key.toLowerCase();
+
+  // Permitimos sólo Tab para moverse por el modal
+  const permitir = (clave === 'tab');
+
+  if (!permitir) {
+    ev.preventDefault();
+    ev.stopImmediatePropagation(); // más fuerte que stopPropagation
+  }
+}, true); // 👈 en captura, para interceptar antes que tus otros handlers
+
+/* Sugerencia adicional: también bloquear keyup/keypress por si algún atajo escucha allí */
+['keyup','keypress'].forEach(tipo => {
+  window.addEventListener(tipo, (ev) => {
+    if (!modalParticipantesAbierto) return;
+
+    const tag  = (ev.target?.tagName || '').toLowerCase();
+    const type = (ev.target?.type || '').toLowerCase();
+    const esCampoEscritura =
+      (tag === 'input'  && ['text','number','search','email','password','tel','url'].includes(type)) ||
+      (tag === 'textarea');
+
+    if (esCampoEscritura) {
+      ev.stopPropagation();
+      return;
+    }
+    ev.preventDefault();
+    ev.stopImmediatePropagation();
+  }, true);
+});
+
+
+/* Deshabilitar botones del juego mientras hay modal */
+function bloquearUI(bloq){
+  const ids = ['btn-sacar','btn-listo','btn-detener','btn-editar','btn-skip','btn-ajustes'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = !!bloq;
+  });
+  // además, si bloqueás, cerrá ajustes por seguridad:
+  if (bloq){
+    const p = document.getElementById('panel-ajustes');
+    if (p) p.style.display = 'none';
+  }
+}
+
+// === Atajo seguro de reinicio: dos teclas a la vez (R + J) ===
+// Cambiá estas dos letras si preferís otra combinación:
+const COMBO_RESET = new Set(['r','j']);   // R + J
+const COMBO_WINDOW_MS = 600;              // ventana para “a la vez” (0.6 s)
+
+let teclasAbajo = new Set();
+let timerCombo = null;
+
+function esCampoEscritura(ev){
+  const tag  = (ev.target?.tagName || '').toLowerCase();
+  const type = (ev.target?.type || '').toLowerCase();
+  return (tag === 'input'  && ['text','number','search','email','password','tel','url'].includes(type))
+      || (tag === 'textarea')
+      || ev.isComposing;
+}
+
+function accionDeReinicio(){
+  // Si no querés confirmación, llamá directo: volverAlInicio({ reset:true });
+  if (confirm('¿Reiniciar el juego?')) volverAlInicio({ reset: true });
+}
+
+window.addEventListener('keydown', (ev) => {
+  // No dispares atajos si está el modal de participantes abierto
+  if (window.modalParticipantesAbierto) return;
+  if (esCampoEscritura(ev)) return;
+
+  const k = ev.key.toLowerCase();
+  if (k.length === 1) teclasAbajo.add(k); // sólo letras/números
+
+  // Inicia ventana de combo si no estaba corriendo
+  if (timerCombo === null) {
+    timerCombo = setTimeout(() => { teclasAbajo.clear(); timerCombo = null; }, COMBO_WINDOW_MS);
+  }
+
+  // ¿Están todas las teclas de la combinación presionadas?
+  const match = [...COMBO_RESET].every(t => teclasAbajo.has(t));
+  if (match && !ev.repeat) {
+    ev.preventDefault();
+    ev.stopImmediatePropagation();
+    accionDeReinicio();
+    // limpiar combo
+    teclasAbajo.clear();
+    clearTimeout(timerCombo);
+    timerCombo = null;
+  }
+});
+
+window.addEventListener('keyup', (ev) => {
+  teclasAbajo.delete(ev.key.toLowerCase());
+});
+
+
+function volverAlInicio(opciones = { reset: false }){
+  try {
+    // 1) Pausar cronómetro si estuviera sonando
+    const v = document.getElementById('cronometro');
+    try { v.pause(); } catch(e){}
+    v.classList.remove('visible');
+
+    // 2) Ocultar controles de turno activos
+    document.getElementById('btn-listo')?.classList.remove('animado');
+    document.getElementById('btn-detener')?.style?.setProperty('display','none');
+    document.getElementById('resultado')?.replaceChildren();
+    document.getElementById('cartaContainer')?.replaceChildren();
+
+    // 3) (Opcional) Resetear algunos flags de jugada, pero SIN tocar puntajes ni el turno
+    //   - si usás estado para DF / Fantasma, limpiá lo mínimo para no dejar cosas colgadas:
+    if (window.dobleFuncion) {
+      dobleFuncion.activo = false;
+      dobleFuncion.rondasPendientes = 0;
+    }
+    window.cartaActual = null;
+
+    // 4) Mostrar la overlay de inicio
+    const intro = document.querySelector('.pantalla-inicio');
+    if (intro) {
+      intro.classList.remove('zoom-out');  // por si la animaste al salir
+      intro.style.display = 'flex';
+    }
+
+    // 5) Volver a habilitar/ordenar UI de juego como “en espera”
+    const btnListo = document.getElementById('btn-listo');
+    if (btnListo) btnListo.style.display = 'none';
+    const btnSacar = document.getElementById('btn-sacar');
+    if (btnSacar) btnSacar.disabled = false;
+
+    // 6) Actualizar banner de “quién juega” por si editás participantes y volvés
+    if (typeof actualizarBannerPorTurno === 'function') {
+      actualizarBannerPorTurno();
+    }
+
+    // 7) Si querés usar esta casita como “volver y arrancar de cero”:
+    if (opciones.reset === true && typeof resetearJuego === 'function') {
+      resetearJuego(); // esto sí borra puntajes/meta según tu implementación actual
+    }
+  } catch(e){}
+}
+
+
+/* Enlazar eventos del modal (una vez cargado el DOM) */
+function wiringModalParticipantes(){
+  const modal = document.getElementById('modal-participantes');
+  if (!modal) return;
+  // Tabs
+  document.querySelectorAll('.mp-tab').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      guardarNombresEquipoActual(); // guarda lo que haya en la pestaña que dejamos
+      setEquipoTab(b.dataset.team);
+    });
+  });
+  // Cantidad
+  const inpCant = document.getElementById('mp-cantidad');
+  inpCant.addEventListener('change', generarCamposNombres);
+  inpCant.addEventListener('input', generarCamposNombres);
+
+  // Botones Guardar / Cerrar
+  document.getElementById('mp-guardar').addEventListener('click', ()=>{
+    guardarNombresEquipoActual();
+    // Actualizamos banner por si ya estamos en juego
+    actualizarBannerPorTurno();
+    cerrarModalParticipantes();
+  });
+  document.getElementById('mp-cerrar').addEventListener('click', ()=>{
+    guardarNombresEquipoActual();
+    cerrarModalParticipantes();
+  });
+}
+
+/* ====== Hook no-invasivo para detectar cambio de turno ======
+   Tu juego usa la variable global `turnoCuchara` (true/false).
+   No vamos a reescribir tu lógica: detectamos cambios con un check suave.
+*/
+let __ultimoTurno = null;
+setInterval(()=>{
+  try{
+    if (typeof turnoCuchara === 'boolean' && turnoCuchara !== __ultimoTurno){
+
+      // 1) Cerrar el turno que se va → acreditar aciertos a quien acaba de actuar
+      if (__ultimoTurno !== null){
+        const equipoQueSeVa = __ultimoTurno ? 'cuchara' : 'tenedor';
+        const puntosAhora = (equipoQueSeVa === 'cuchara') ? (puntajeCuchara||0) : (puntajeTenedor||0);
+        const delta = puntosAhora - (snapshotInicioTurno[equipoQueSeVa] || 0);
+
+        // jugador que estaba actuando (índice actual ANTES de avanzar)
+        const lista = participantes[equipoQueSeVa] || [];
+        let nombreTurno = '—';
+        if (lista.length){
+          const i = (idxJugador[equipoQueSeVa] % lista.length);
+          nombreTurno = lista[i] || '—';
+        }
+
+        registrarAciertosJugador(equipoQueSeVa, nombreTurno, delta);
+        renderMVP();
+
+        // Avanzar al siguiente del equipo que se va (como ya hacías)
+        avanzarJugador(equipoQueSeVa);
+      }
+
+      // 2) Guardar nuevo estado de turno
+      __ultimoTurno = turnoCuchara;
+
+      // 3) Preparar snapshot del equipo que ENTRA (baseline para medir su turno)
+      const equipoQueEntra = turnoCuchara ? 'cuchara' : 'tenedor';
+      snapshotInicioTurno[equipoQueEntra] = (equipoQueEntra === 'cuchara') ? (puntajeCuchara||0) : (puntajeTenedor||0);
+
+      // 4) Actualizar banner de “quién juega”
+      actualizarBannerPorTurno();
+    }
+  }catch(e){}
+}, 120);
+
+
+
+/* Iniciar: cuando el DOM esté listo */
+document.addEventListener('DOMContentLoaded', ()=>{
+  snapshotInicioTurno.cuchara = puntajeCuchara || 0;
+  snapshotInicioTurno.tenedor = puntajeTenedor || 0;
+  wiringModalParticipantes();
+  // Inyectar el botón en la Intro apenas exista (hay animaciones en tu Intro, por eso lo chequeamos regularmente)
+  const waitIntro = setInterval(()=>{
+    montarBotonParticipantesEnIntro();
+    const intro = document.querySelector('.pantalla-inicio');
+    if (intro && document.getElementById('btn-participantes-intro')) clearInterval(waitIntro);
+  }, 120);
+  document.getElementById('btn-participantes-intro')?.addEventListener('click', abrirModalParticipantes);
+
+  // Mostrar banner desde el arranque (por si ya hay lista precargada)
+  actualizarBannerPorTurno();
+});
+
+    let puntosMeta = 15;
+    let usosIntercambioDestinos = 0; // 👈 ahora sí está bien ubicada
+    window.historialJugadas = [];
+    let respuestaYaRegistrada = false;
+    let usosCambiazo = {
+    cuchara: 0,
+    tenedor: 0
+    };
+    let isSacrificio = false;
+    // === Racha de películas consecutivas ===
+window.streak = { cuchara: 0, tenedor: 0 };
+window.lastBonusMultiple = { cuchara: 0, tenedor: 0 };
+
+function renderStreakIcons(equipo){
+  const s = window.streak[equipo];
+  const within = s % 5 === 0 ? 5 : s % 5; 
+  const litCount = within >= 5 ? 3 : Math.max(0, within - 2);
+
+  for (let i=1;i<=3;i++){
+    const el = document.getElementById(`streakIcon-${equipo}-${i}`);
+    if(el) el.classList.toggle('is-on', i <= litCount);
+  }
+}
+
+function resetStreakUI(equipo){
+  for (let i=1;i<=3;i++){
+    const el = document.getElementById(`streakIcon-${equipo}-${i}`);
+    if(el) el.classList.remove('is-on');
+  }
+}
+
+function registrarAcierto(equipo){
+  window.streak[equipo]++;
+  if (window.streak[equipo] % 5 === 0 && window.lastBonusMultiple[equipo] !== window.streak[equipo]){
+   
+    // sonido
+      const sBonus = document.getElementById("sonidoBonus");
+      try { sBonus?.play()?.catch(()=>{}); } catch(e){}
+
+      // mensaje
+      const msg = document.getElementById(`bonusMsg-${equipo}`);
+      if(msg){
+        msg.classList.remove("show");
+        requestAnimationFrame(()=>{ msg.classList.add("show"); });
+      }
+ // bonus +1
+
+    if (equipo === "cuchara") {
+      puntajeCuchara++;
+      document.getElementById("puntajeCuchara").innerText = puntajeCuchara;
+      animarPuntaje(document.getElementById("puntajeCuchara"), 1);
+    } else {
+      puntajeTenedor++;
+      document.getElementById("puntajeTenedor").innerText = puntajeTenedor;
+      animarPuntaje(document.getElementById("puntajeTenedor"), 1);
+    }
+    window.lastBonusMultiple[equipo] = window.streak[equipo];
+  }
+  renderStreakIcons(equipo);
+}
+
+function registrarFallo(equipo){
+  window.streak[equipo] = 0;
+  window.lastBonusMultiple[equipo] = 0;
+  resetStreakUI(equipo);
+}
+
+    let modalSacrificioAbierto = false;
+    // Silencia overlays/flash mientras se celebra un diamante
+    window.enCelebracionDiamante = false;
+    let _timerCelebracionDiamante = null;
+
+    // --- NUEVO: helpers de tiempo/puntaje ---
+let tiempoTranscurrido = 0;
+
+function duracionLogicaActual() {
+  if (!cartaActual) return 90;
+  // Usamos la duración de la carta si ya está seteada (p.ej. Sacrificio la pone en 120)
+  if (typeof cartaActual.duracion === 'number') return cartaActual.duracion;
+
+  switch (cartaActual.nombre) {
+    case "+30":     return 120;
+    case "-30":     return 60;
+    case "RÁFAGA":  return 30;
+    default:        return 90; // jugada normal, descarga, amuleto, comodín, etc.
+  }
+}
+
+
+// Recibe el elemento .puntaje del equipo y el delta (ej: +3 o -2)
+  function animarPuntaje($el, delta){
+    // Limpio clases previas para permitir re-disparo si ocurre rápido
+    $el.classList.remove('gana','pierde');
+    // force reflow
+    $el.classList.remove('gana','pierde');
+    requestAnimationFrame(()=>{ $el.classList.add(Number(delta)>0 ? 'gana' : 'pierde'); });
+
+    const gano = Number(delta) > 0;
+    $el.classList.add(gano ? 'gana' : 'pierde');
+
+    // Quitar la clase al terminar (deja el box “limpio”)
+    const onEnd = () => {
+      $el.classList.remove('gana','pierde');
+      $el.removeEventListener('animationend', onEnd);
+    };
+    $el.addEventListener('animationend', onEnd);
+
+  }
+
+  
+
+function puntosPorTiempo(base, elapsed) {
+  // clamp por si el video dura "un poco más" por efectos
+  const e = Math.min(elapsed, base);
+  // bandas de 30s: (120→4..1, 90→3..1, 60→2..1, 30→1)
+  return Math.max(1, Math.ceil((base - e) / 30));
+}
+
+
+  function setBloqueoUIporSacrificio(bloquear) {
+  modalSacrificioAbierto = bloquear;
+
+  const btnSacar   = document.getElementById("btn-sacar");
+  const btnListo   = document.getElementById("btn-listo");
+  const btnDetener = document.getElementById("btn-detener");
+  const btnEditar  = document.getElementById("btn-editar");
+
+  if (btnSacar)   btnSacar.disabled   = bloquear || (cartaActual && cartaActual.nombre === "SACRIFICIO");
+  if (btnListo)   btnListo.disabled   = bloquear;
+  if (btnDetener) btnDetener.disabled = bloquear;
+  if (btnEditar)  btnEditar.disabled  = bloquear;
+}
+
+  
+
+  const cartas = [
+  { nombre: "+30", archivo: "./assets/mas_30.png", duracion: 120 },
+  { nombre: "-30", archivo: "./assets/menos_30.png", duracion: 60 },
+  { nombre: "AMULETO", archivo: "./assets/AMULETO.png", duracion: 90 },
+  { nombre: "COMODIN", archivo: "./assets/COMODIN.png", duracion: 90 },
+  { nombre: "JUGADA NORMAL", archivo: "./assets/JUGADA NORMAL.png", duracion: 90 },
+  { nombre: "PIERDE EL TURNO", archivo: "./assets/PIERDE EL TURNO.png", duracion: 90 },
+  { nombre: "RÁFAGA", archivo: "./assets/RÁFAGA.png", duracion: 30 },
+  { nombre: "INTERCAMBIO DE DESTINOS", archivo: "./assets/INTERCAMBIO_DE_DESTINOS.png", duracion: 0 },
+  { nombre: "CARTA FANTASMA V2", archivo: "./assets/CARTA FANTASMA V2.png", duracion: 90 },
+  { nombre: "CAMBIAZO", archivo: "./assets/CAMBIAZO.png", duracion: 90 },
+  { nombre: "SACRIFICIO", archivo: "./assets/SACRIFICIO.png", duracion: 90 },
+  { nombre: "DOBLE FUNCION", archivo: "./assets/DOBLE FUNCION.png", duracion: 90 },
+  { nombre: "DESCARGA ELECTRICA", archivo: "./assets/DESCARGA ELECTRICA.png", duracion: 90 }
+];
+
+// === PRELOAD de imágenes y caché en memoria ===
+const IMAGENES_A_PRECARGAR = [
+  "./assets/JUGADA NORMAL.png",
+  "./assets/mas_30.png",
+  "./assets/menos_30.png",
+  "./assets/DOBLE FUNCION.png",
+  "./assets/SACRIFICIO.png",
+  "./assets/DESCARGA ELECTRICA.png",
+  "./assets/COMODIN.png",
+  "./assets/AMULETO.png",
+  "./assets/RÁFAGA.png",
+  "./assets/CARTA FANTASMA V2.png",
+  "./assets/PIERDE EL TURNO.png",
+  "./assets/CAMBIAZO.png",
+  "./assets/INTERCAMBIO_DE_DESTINOS.png",
+  "./assets/fondo_doble.png",
+  "./assets/fondo_descarga.png",
+  "./assets/fondo_sacrificio.png",
+  "./assets/fondo_fantasma.png",
+  "./assets/FondoCuchara.png",
+  "./assets/FondoTenedor.png",
+  "./assets/escudo_team_cuchara.png",
+  "./assets/escudo_team_cuchara_gris.png",
+  "./assets/escudo_team_tenedor.png",
+  "./assets/escudo_team_tenedor_gris.png",
+];
+
+const IMG_CACHE = new Map();
+
+function precargarImagenes(lista) {
+  lista.forEach(src => {
+    if (!IMG_CACHE.has(src)) {
+      const img = new Image();
+      img.src = src;               // dispara la descarga
+      img.decoding = "async";
+      IMG_CACHE.set(src, img);     // guardamos el objeto para clonado
+    }
+  });
+}
+
+// Arranca la precarga apenas carga la página
+window.addEventListener("load", () => precargarImagenes(IMAGENES_A_PRECARGAR));
+
+// Helper para renderizar cartas desde cache (si está), con “instant paint”
+function renderCarta(src, alt, className, widthPx = 280) {
+  const cc = document.getElementById("cartaContainer");
+  if (cc) cc.innerHTML = "";
+
+  const base = IMG_CACHE.get(src);
+  // cloná si ya está precargada; si no, creá una nueva y se cacheará luego
+  const img = base ? base.cloneNode() : new Image();
+
+  img.src = src;
+  img.alt = alt || "";
+  img.className = className || "";
+  img.style.width = widthPx + "px";
+  img.style.marginTop = "20px";
+  img.style.borderRadius = "16px";
+  img.loading = "eager";
+  img.decoding = "sync";                   // intenta decodificar ya
+  img.setAttribute("fetchpriority", "high");
+
+  // Si querés evitar “parpadeo”, podés esperar la decodificación:
+  // (esto no retrasa la red: solo asegura que cuando se inserte se pinta al instante)
+  if (typeof img.decode === "function") {
+    img.decode().catch(()=>{}).finally(() => cc?.appendChild(img));
+  } else {
+    cc?.appendChild(img);
+  }
+}
+
+
+
+  // === Config de aparición por carta: pesos, máximos y condiciones ===
+const configuracionCartas = {
+  "JUGADA NORMAL":        { peso: 60, max: Infinity },
+  "CAMBIAZO":             { peso: 40, max: Infinity },
+  "+30":                  { peso: 10, max: Infinity },
+  "-30":                  { peso: 10, max: Infinity },
+  "RÁFAGA":               { peso: 10, max: Infinity },
+
+  "AMULETO":              { peso: 5,  max: 3 },
+  "COMODIN":              { peso: 6,  max: 5 },
+  "DESCARGA ELECTRICA":   { peso: 4,  max: 2 },
+
+  "DOBLE FUNCION": {
+              peso: 5,
+              max: 3,
+              condicion: ({cuchara, tenedor}) => {
+                // 1) Si ya estamos en DF, nunca permitir encadenarla
+                if (dobleFuncion?.activo) return false;
+
+                // 2) Evitar “casi final”: si alguien está a ≤2 puntos de la meta, no sale
+                const maxPuntaje = Math.max(cuchara|0, tenedor|0);
+                const cercaDeMeta = (typeof puntosMeta === 'number') && ((puntosMeta - maxPuntaje) <= MARGEN_META_DF);
+                if (cercaDeMeta) return false;
+
+                // 3) Sólo permitir en el inicio/mitad de la ronda (primeros N turnos)
+                return (turnosEnRonda <= LIMITE_TURNOS_DF);
+                  }
+                },
+
+  "CARTA FANTASMA V2":    { peso: 2,  max: 2 },
+
+  // Condición: equipo del turno debe tener ≥ 5
+  "SACRIFICIO":           { peso: 10,  max: 2, condicion: ({equipoTurno}) => equipoTurno >= 5 },
+
+  // Condición: que algún equipo tenga ≥ 15; máx 2
+  "INTERCAMBIO DE DESTINOS": { peso: 5, max: 2, condicion: ({cuchara, tenedor}) => Math.max(cuchara, tenedor) >= 15 },
+
+  // Por si la tuvieras activa aún
+  "PIERDE EL TURNO":      { peso: 4,  max: 2 }
+};
+
+// Contadores por partida
+const contadorCartas = {};
+function inicializarContadorCartas() {
+  Object.keys(configuracionCartas).forEach(k => contadorCartas[k] = 0);
+}
+inicializarContadorCartas();
+// Control de rondas (2 turnos = 1 ronda) y obligatoriedad de Intercambio 1x por ronda
+let turnosEnRonda = 0;          // 0 = primer turno de la ronda, 1 = segundo
+let intercambioPendiente = true; // true = todavía no salió en esta ronda
+
+// === Modo Diamantes / Rondas ===
+let usarDiamantes = false;
+let diamantesParaGanar = 3;
+let diamantes = { cuchara: 0, tenedor: 0 };
+let rondaActual = 1;
+
+
+
+  function abrirEditorPuntaje() {
+  const pop = document.getElementById('popupPuntaje');
+  const inpC = document.getElementById('inpCuchara');
+  const inpT = document.getElementById('inpTenedor');
+  inpC.value = typeof puntajeCuchara === 'number' ? puntajeCuchara : 0;
+  inpT.value = typeof puntajeTenedor === 'number' ? puntajeTenedor : 0;
+  pop.style.display = 'flex';
+
+  // foco inicial
+  setTimeout(() => inpC.focus(), 50);
+
+  bloquearEdicionInputs();
+  
+}
+
+function bloquearEdicionInputs() {
+  ['inpCuchara','inpTenedor'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    // Bloquear entrada por teclado, pegado y arrastre
+    el.addEventListener('keydown', e => e.preventDefault());
+    el.addEventListener('paste',  e => e.preventDefault());
+    el.addEventListener('drop',   e => e.preventDefault());
+
+    // Bloquear cambio con rueda del mouse
+    el.addEventListener('wheel',  e => e.preventDefault(), { passive: false });
+
+    // (redundante, pero aseguramos)
+    el.setAttribute('readonly', 'readonly');
+    el.setAttribute('inputmode', 'none'); // evita teclado en móviles
+  });
+}
+
+// Llamalo al final de abrirEditorPuntaje()
+
+
+function cerrarEditorPuntaje() {
+  const pop = document.getElementById('popupPuntaje');
+  pop.style.display = 'none';
+}
+
+function stepScore(team, delta) {
+  if (team === 'cuchara') {
+    const inp = document.getElementById('inpCuchara');
+    inp.value = String(Math.max(0, parseInt(inp.value || '0', 10) + delta));
+  } else {
+    const inp = document.getElementById('inpTenedor');
+    inp.value = String(Math.max(0, parseInt(inp.value || '0', 10) + delta));
+  }
+}
+
+function aplicarEditorPuntaje() {
+  // 0) Tomo baseline ANTES de sobrescribir (para calcular el delta)
+  const prevC = Number(puntajeCuchara || 0);
+  const prevT = Number(puntajeTenedor || 0);
+
+  // 1) Leo los nuevos valores del popup
+  const vC = parseInt(document.getElementById('inpCuchara').value || '0', 10);
+  const vT = parseInt(document.getElementById('inpTenedor').value || '0', 10);
+
+  // 2) Valido y asigno al estado central
+  if (!Number.isNaN(vC)) {
+    puntajeCuchara = vC;
+    document.getElementById('puntajeCuchara').innerText = puntajeCuchara;
+  }
+  if (!Number.isNaN(vT)) {
+    puntajeTenedor = vT;
+    document.getElementById('puntajeTenedor').innerText = puntajeTenedor;
+  }
+
+  // 3) Disparo animaciones en los cuadrados de puntaje según el delta
+  //    (usa tus helpers animarPuntaje/flashPantallaSuave)
+  const elC = document.getElementById('puntajeCuchara');
+  const elT = document.getElementById('puntajeTenedor');
+  const deltaC = (Number.isNaN(vC) ? 0 : vC - prevC);
+  const deltaT = (Number.isNaN(vT) ? 0 : vT - prevT);
+
+  if (elC && deltaC !== 0) animarPuntaje(elC, deltaC);
+  if (elT && deltaT !== 0) animarPuntaje(elT, deltaT);
+
+  // 4) Cierro popup y corro tu chequeo de victoria habitual
+  cerrarEditorPuntaje();
+  verificarVictoriaManual();
+}
+
+
+function verificarVictoriaManual() {
+  if (puntajeCuchara >= puntosMeta || puntajeTenedor >= puntosMeta) {
+    const ganadorKey = (puntajeCuchara >= puntosMeta) ? 'cuchara' : 'tenedor';
+    // 👉 ÚNICO camino: otorga, anima + SFX, y decide ronda/final
+    otorgarDiamante(ganadorKey);
+  }
+}
+
+
+
+
+  function sacarCarta() {
+    let cartaValida = false;
+    respuestaYaRegistrada = false;
+    let intentos = 0;
+    let cartaElegida = null;
+
+
+    // --- limpiar UI de la jugada anterior recién cuando saco una nueva carta ---
+const cc = document.getElementById("cartaContainer");
+if (cc) cc.innerHTML = "";
+
+// Remover fondos “efímeros” de cartas especiales de la ronda anterior
+document.body.classList.remove("fondo-fantasma", "fondo-descarga", "fondo-doble");
+// ⚠️ No tocar document.body.style.backgroundImage acá;
+// actualizarTurno() se encarga de setear el fondo del equipo según corresponda.
+
+
+  const btnSacar = document.getElementById("btn-sacar");
+  btnSacar.classList.remove("boton-animado");
+  void btnSacar.offsetWidth; // fuerza el reinicio de animación
+  btnSacar.classList.add("boton-animado");
+
+  // Reproducir sonido
+const sonidoClick = document.getElementById("sonidoClickArcade");
+if (sonidoClick) {
+  sonidoClick.currentTime = 0;
+  sonidoClick.play().catch(e => console.log("Error al reproducir sonido:", e));
+}
+
+// --- FORZADO: garantizar "Intercambio de Destinos" 1x por ronda ---
+// Si estamos en el SEGUNDO turno de la ronda (turnosEnRonda === 1),
+// Intercambio aún no salió (intercambioPendiente),
+// no superamos el límite de 2 por partida,
+// y hay al menos un equipo con 15+, entonces FORZAMOS esta carta.
+if (intercambioPendiente &&
+    turnosEnRonda === 1 &&
+    usosIntercambioDestinos < 2 &&
+    (puntajeCuchara >= 15 || puntajeTenedor >= 15)) {
+  cartaElegida = cartas.find(x => x.nombre === "INTERCAMBIO DE DESTINOS");
+  cartaValida = true; // saltamos la bolsa aleatoria
+}
+
+
+while (!cartaValida && intentos < 80) {
+  const disponibles = [];
+  const estado = {
+    cuchara: puntajeCuchara|0,
+    tenedor: puntajeTenedor|0,
+    equipoTurno: (turnoCuchara ? puntajeCuchara : puntajeTenedor)|0
+  };
+
+  // Construye la bolsa según config, respetando max y condiciones
+  cartas.forEach(c => {
+    const nombre = c.nombre;
+    const conf = configuracionCartas[nombre];
+    if (!conf) return;                               // si no está en config, se ignora
+    if (contadorCartas[nombre] >= conf.max) return;  // respecta máximos
+
+    if (typeof conf.condicion === "function") {
+      const ok = conf.condicion(estado);
+      if (!ok) return;
+    }
+
+    // Peso → cantidad de tickets en la bolsa
+    for (let i = 0; i < conf.peso; i++) disponibles.push(c);
+  });
+
+  // Fallback por si no hay ninguna disponible
+  if (disponibles.length === 0) {
+    cartaElegida = cartas.find(x => x.nombre === "JUGADA NORMAL");
+    cartaValida = true;
+    break;
+  }
+
+  // Elección aleatoria por peso
+  const idx = Math.floor(Math.random() * disponibles.length);
+  const candidata = disponibles[idx];
+
+  // 🔒 Guardia anti-DF si la bolsa la propone pero no corresponde
+    if (candidata.nombre === "DOBLE FUNCION") {
+      const maxP = Math.max(puntajeCuchara|0, puntajeTenedor|0);
+      const meta = Number(puntosMeta);
+      const cercaDeMeta = Number.isFinite(meta) && ((meta - maxP) <= MARGEN_META_DF); // <=, no ≤
+
+      // Bloques: si está muy cerca de la meta, si ya hay DF activa, o si estamos fuera de la ventana de inicio/mitad
+      if (cercaDeMeta || (dobleFuncion?.activo) || (turnosEnRonda > LIMITE_TURNOS_DF)) {
+        intentos++;
+        continue; // salteamos esta candidata y sorteamos otra
+      }
+    }
+
+
+  // Regla anti-repetición inmediata (opcional, se permite repetir Jugada Normal)
+  if (candidata.nombre !== "JUGADA NORMAL" && candidata.nombre === ultimaCartaNombre) {
+    intentos++;
+    continue;
+  }
+
+  cartaElegida = candidata;
+  cartaValida = true;
+  intentos++;
+}
+
+// Aumenta contador del tipo de carta elegido
+if (cartaElegida && configuracionCartas[cartaElegida.nombre]) {
+  contadorCartas[cartaElegida.nombre]++;
+}
+
+
+cartaActual = cartaElegida;
+ultimaCartaNombre = cartaActual.nombre;
+
+if (cartaActual.nombre === "CARTA FANTASMA V2") {
+  document.body.classList.add("fondo-fantasma");
+  setBotonSacarEstado(true);  // se etiquetará "👻 En juego" automáticamente
+  document.body.style.backgroundImage = "url('./assets/fondo_fantasma.png')";
+  const sonidoFantasma = document.getElementById("sonidoFantasma");
+if (sonidoFantasma) {
+  sonidoFantasma.currentTime = 0;
+  sonidoFantasma.play().catch(e => console.log("Error al reproducir sonidoFantasma:", e));
+}
+
+  document.getElementById("cartaContainer").innerHTML = "";
+
+
+  const puntosRandom = Math.floor(Math.random() * 7) + 2;
+  cartaActual.puntajeRandom = puntosRandom;
+
+  renderCarta(cartaActual.archivo, cartaActual.nombre, "carta-fantasma", 220);
+
+
+  const textoPuntaje = document.getElementById("puntajeFantasma");
+  //textoPuntaje.textContent = `⚠ Vale ${puntosRandom} puntos`;
+  //textoPuntaje.style.display = "block";
+
+  setTimeout(() => {
+    textoPuntaje.style.display = "none";
+  }, 4000);
+
+  // Cargar cronómetro especial
+  const video = document.getElementById("cronometro");
+  video.pause();
+  video.removeAttribute('src');
+  video.classList.remove("visible");
+  
+
+  setCronometro("cronometro_fantasma");
+  video.load();
+  video.muted = false;
+  video.volume = 1.0;
+
+ document.getElementById("btn-listo").style.display = "inline-block";
+
+
+
+  video.classList.add("animar-entrada");
+  setTimeout(() => video.classList.remove("animar-entrada"), 500);
+
+  document.getElementById("resultado").innerText = "";
+
+  
+  const btnListo = document.getElementById("btn-listo");
+  btnListo.style.display = "inline-block";
+  btnListo.classList.remove("boton-cuchara", "boton-tenedor");
+  btnListo.classList.add(turnoCuchara ? "boton-cuchara" : "boton-tenedor");
+  btnListo.classList.add("animado");
+  document.getElementById("btn-detener").disabled = false;
+
+
+
+
+  return; // Importante: no seguir con lógica normal
+}
+
+// === DESCARGA ELECTRICA ===
+if (cartaActual.nombre === "DESCARGA ELECTRICA") {
+  // Fondo naranja estilo especial
+  document.body.classList.add("fondo-descarga");
+
+  // Limpiar contenedor y render de la carta con la clase especial
+  renderCarta(cartaActual.archivo, cartaActual.nombre, "carta-descarga", 290);
+
+  const btnSacar = document.getElementById("btn-sacar");
+if (btnSacar) {
+  btnSacar.disabled = true;
+  btnSacar.innerText = "⚡ En juego";
+}
+
+
+    // 🔊 Sonido de rayo al revelar DESCARGA ELECTRICA
+  const sonidoRayo = document.getElementById("sonidoRayo");
+  if (sonidoRayo) {
+    sonidoRayo.currentTime = 0;
+    sonidoRayo.play().catch(e => console.log("Error al reproducir sonidoRayo:", e));
+  }
+  // Fondo de Descarga (se limpia al terminar la jugada)
+  document.body.style.backgroundImage = "url('./assets/fondo_descarga.png')";
+
+
+  // Cargar cronómetro normal (1:30) y mostrar "Estoy Listo"
+  const video = document.getElementById("cronometro");
+  video.pause();
+  video.removeAttribute("src");
+  video.classList.remove("visible");
+  
+
+  setCronometro("cronometro_descarga_90");
+  video.load();
+  video.muted = false;
+  video.volume = 1.0;
+
+  // mostrar "Estoy Listo" con estilo de turno, como en Fantasma
+  const btnListo = document.getElementById("btn-listo");
+  btnListo.style.display = "inline-block";
+  btnListo.classList.remove("boton-cuchara", "boton-tenedor");
+  btnListo.classList.add(turnoCuchara ? "boton-cuchara" : "boton-tenedor");
+  btnListo.classList.add("animado");
+  document.getElementById("btn-detener").disabled = false;
+
+  // Entrada suave del video
+  video.classList.add("animar-entrada");
+  setTimeout(() => video.classList.remove("animar-entrada"), 500);
+
+  document.getElementById("resultado").innerText = "";
+
+  return; // Importante: no seguir con la lógica normal (igual que Fantasma/Cambiazo)
+}
+
+/// === SACRIFICIO ===
+if (cartaActual.nombre === "SACRIFICIO") {
+  // Pintar la carta con glow rojo si ya agregaste la clase .carta-sacrificio
+  renderCarta(cartaActual.archivo, cartaActual.nombre, "carta-animada carta-sacrificio", 290);
+
+
+  // 🔊 Sonido al revelar SACRIFICIO
+  const sSac = document.getElementById("sonidoSacrificio");
+  if (sSac) { sSac.currentTime = 0; sSac.play().catch(() => {}); }
+
+  // Mensaje “Has hecho un sacrificio”
+  document.getElementById("resultado").innerHTML = `
+    <div class="mensaje-sacrificio">🩸 Has hecho un sacrificio 🩸</div>
+  `;
+
+  // Preparar video (oculto) ...
+  const video = document.getElementById("cronometro");
+  video.pause();
+  video.removeAttribute("src");
+  video.classList.remove("visible");
+  video.load();
+
+  // Mostrar popup propio
+  mostrarPopupSacrificio();
+
+  // Bloquear “Sacar Carta” con su etiqueta automática
+setBotonSacarEstado(true);  // mostrará "🩸 En juego"
+
+  // Mostrar “Estoy Listo”...
+  const btnListo = document.getElementById("btn-listo");
+  btnListo.style.display = "inline-block";
+  btnListo.classList.remove("boton-cuchara", "boton-tenedor");
+  btnListo.classList.add(turnoCuchara ? "boton-cuchara" : "boton-tenedor");
+  btnListo.classList.add("animado");
+  return;
+}
+
+// === DOBLE FUNCION ===
+if (cartaActual.nombre === "DOBLE FUNCION") {
+  // Estado
+  dobleFuncion.activo = true;
+  dobleFuncion.rondasPendientes = 2;
+
+  // 🔊 Sonido reveal DF (fallback a click de proyector si no está el archivo)
+const sDF = document.getElementById("sonidoDobleFuncion") || document.getElementById("sfxProyectorClick");
+if (sDF) { try { sDF.currentTime = 0; sDF.play().catch(()=>{}); } catch(e){} }
+
+
+  // Mostrar carta con estilo legendario (usa clases que ya tenés)
+  renderCarta(cartaActual.archivo, cartaActual.nombre, "carta-animada carta-doble-azul", 300);
+
+  // Fondo especial DF (imagen opcional + clase con degradé)
+  document.body.classList.add("fondo-doble");
+  document.body.style.backgroundImage = "url('./assets/fondo_doble.png')"; // si el archivo no existe, igual queda el degradé de la clase
+
+
+  // Preparar cronómetro de DF (1:30 con estética propia)
+  const video = document.getElementById("cronometro");
+  video.pause();
+  video.removeAttribute("src");
+  video.classList.remove("visible");
+  
+  setCronometro("doble_funcion");
+  video.load();
+  video.muted = false;
+  video.volume = 1.0;
+
+  // Botón "Estoy Listo"
+  const btnListo = document.getElementById("btn-listo");
+  btnListo.style.display = "inline-block";
+  btnListo.classList.remove("boton-cuchara", "boton-tenedor");
+  btnListo.classList.add(turnoCuchara ? "boton-cuchara" : "boton-tenedor");
+  btnListo.classList.add("animado");
+
+  // Bloquear “Sacar Carta” durante todo el modo DF
+  const btnSacar = document.getElementById("btn-sacar");
+  btnSacar.disabled = true;
+  setBotonSacarEstado(true, "🎬 En juego");
+
+  // Mensaje de estado
+  document.getElementById("resultado").innerHTML =
+  '<div class="mensaje-df-azul">🎬 <b>Doble Función</b> — 1ª de 2</div>';
+
+
+    // Luz de proyector visible + leds en espera de 1ª función
+const dfOverlay = document.getElementById("dfLuzCamara");
+if (dfOverlay) dfOverlay.style.display = "block";
+const led1 = document.getElementById("dfLed1");
+const led2 = document.getElementById("dfLed2");
+if (led1) { led1.classList.remove("on"); led1.classList.add("blink"); }
+if (led2) { led2.classList.remove("on","blink"); }
+
+
+  return; // Importante: no sigas el flujo normal
+}
+
+
+
+
+if (cartaActual.nombre === "CAMBIAZO") {
+  const equipo = turnoCuchara ? "cuchara" : "tenedor";
+  const puntajeActual = turnoCuchara ? puntajeCuchara : puntajeTenedor;
+  const maxPermitido = maximosCambiazoPermitidos(puntajeActual);
+
+  if (usosCambiazo[equipo] >= maxPermitido) {
+    // Ya usó todos los cambiazos que podía → sacar otra carta
+    sacarCarta();
+    return;
+  }
+
+  usosCambiazo[equipo]++; // Aumentar uso
+
+  renderCarta(cartaActual.archivo, cartaActual.nombre, "carta-cambiazo", 220);
+
+
+  document.getElementById("resultado").innerHTML = `
+  <div id="mensajeCambiazo" style="
+    font-size: 22px;
+    color: #fff;
+    background: radial-gradient(circle, #ff69b4 20%, #800040 100%);
+    padding: 12px 20px;
+    border: 2px solid #fff;
+    border-radius: 14px;
+    margin-top: 12px;
+    box-shadow: 0 0 18px rgba(255, 105, 180, 0.6);
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    animation: parpadeoCambiazo 1.8s ease-in-out infinite;
+  ">
+    🎭 ¡Podés cambiar tu película si querés!
+  </div>
+`;
+
+
+  const video = document.getElementById("cronometro");
+  video.pause();
+  video.removeAttribute("src");
+  video.classList.remove("visible");
+  
+
+  setCronometro("jugada_normal");
+  video.load();
+  video.muted = false;
+  video.volume = 1.0;
+
+  const btnListo = document.getElementById("btn-listo");
+  btnListo.style.display = "inline-block";
+  btnListo.classList.remove("boton-cuchara", "boton-tenedor");
+  btnListo.classList.add(turnoCuchara ? "boton-cuchara" : "boton-tenedor");
+  btnListo.classList.add("animado");
+
+  const btnSacar = document.getElementById("btn-sacar");
+  if (btnSacar) btnSacar.disabled = true;
+  setBotonSacarEstado(true, "🎭 En juego");
+
+
+
+  return;
+}
+
+
+
+if (cartaActual.nombre === "INTERCAMBIO DE DESTINOS") {
+  let chance = usosIntercambioDestinos === 0 ? 0.8 : 0.5; // ✅ 80% primera vez, 50% segunda
+  let algunEquipoTiene10 = puntajeCuchara >= 10 || puntajeTenedor >= 10;
+
+  if (usosIntercambioDestinos < 2 && algunEquipoTiene10 && Math.random() < chance) {
+
+
+    usosIntercambioDestinos++;
+    intercambioPendiente = false; // ✅ esta ronda ya cumplió con su Intercambio
+
+    const sonido = document.getElementById("sonidoIntercambio");
+    if (sonido) {
+      sonido.currentTime = 0;
+      sonido.play().catch(e => console.log("Error al reproducir sonidoIntercambio:", e));
+    }
+
+    document.getElementById("cartaContainer").innerHTML =
+      `<img src="${cartaActual.archivo}" alt="${cartaActual.nombre}" class="carta-animada carta-legendaria" style="width:440px; margin-top:20px; border-radius: 24px;">`;
+
+    video.pause();
+    video.removeAttribute("src");
+    video.load();
+    video.classList.remove("visible");
+    document.getElementById("btn-detener").style.display = "none";
+
+    const temp = puntajeCuchara;
+    puntajeCuchara = puntajeTenedor;
+    puntajeTenedor = temp;
+
+    document.getElementById("puntajeCuchara").innerText = puntajeCuchara;
+    document.getElementById("puntajeTenedor").innerText = puntajeTenedor;
+
+  
+
+    if (cartaActual?.nombre === 'AMULETO') {
+      const elRival = document.getElementById(turnoCuchara ? 'puntajeTenedor' : 'puntajeCuchara');
+      animarPuntaje(elRival, -puntos);
+    }
+
+
+    document.getElementById("resultado").innerHTML = `
+      <div style="font-size: 28px;">🌀 <strong>¡Intercambio de Destinos!</strong></div>
+      <div class="mensaje-legendario" style="font-size: 18px; margin-top: 4px;">¿Será tu premio o tu castigo?</div>
+    `;
+    document.getElementById("btn-listo").style.display = "none";
+
+    turnoCuchara = !turnoCuchara;
+    actualizarTurno();
+    return;
+  } else {
+    sacarCarta(); // no se activó: sacamos otra
+    return;
+  }
+}
+
+
+
+// Mostrar la carta
+const imgSize = cartaActual.nombre === "PIERDE EL TURNO" ? 300 : 200;
+
+let claseEspecial = "";
+
+if (
+  cartaActual.nombre === "+30" ||
+  cartaActual.nombre === "AMULETO" ||
+  cartaActual.nombre === "COMODIN"
+) {
+  claseEspecial = "carta-especial";
+}
+
+if (cartaActual.nombre === "-30" || cartaActual.nombre === "RÁFAGA") {
+  claseEspecial = "carta-sacudida";
+}
+
+// ⚡ DESCARGA ELECTRICA también sacude la carta
+if (cartaActual.nombre === "DESCARGA ELECTRICA") {
+  claseEspecial = (claseEspecial ? claseEspecial + " " : "") + "carta-sacudida";
+}
+
+
+document.getElementById("btn-sacar").disabled = true;
+
+
+renderCarta(cartaActual.archivo, cartaActual.nombre, `carta-animada ${claseEspecial}`, imgSize);
+
+
+
+  // 🔊 Sonido de rayo al revelar DESCARGA ELECTRICA
+if (cartaActual.nombre === "DESCARGA ELECTRICA") {
+  const r = document.getElementById("sonidoRayo");
+  if (r) { r.currentTime = 0; r.play().catch(() => {}); }
+}
+
+
+
+if (cartaActual.nombre === "PIERDE EL TURNO") {
+  // Ocultar el video correctamente
+  video.pause();
+  video.src = ""; // vacío, no removeAttribute
+  video.load();
+  video.classList.remove("visible");
+  document.getElementById("btn-detener").style.display = "none";
+
+  document.getElementById("resultado").innerHTML = `
+  <div class="mensaje-perdio-turno" style="font-size: 22px; color: #ff5555; font-weight: bold; margin-top: 20px;">
+  </div>
+`;
+  turnoCuchara = !turnoCuchara;
+
+  const sonido = document.getElementById("sonidoPerdio");
+  if (sonido) {
+    sonido.currentTime = 0;
+    sonido.play().catch(e => console.log("Error al reproducir sonidoPerdio:", e));
+  }
+
+  document.getElementById("btn-sacar").disabled = false;
+  document.getElementById("btn-sacar").innerText = "👉 Sacar Carta";
+
+
+  actualizarTurno();
+  document.getElementById("btn-listo").style.display = "none";
+  document.getElementById("btn-sacar").disabled = false;
+
+
+  return;
+}
+
+// Si no es pierde turno, reproducir video normalmente
+let nombreArchivo = cartaActual.nombre.toLowerCase().replace(/ /g, "_").normalize("NFD").replace(/[^\w\s.]/g, "");
+if (cartaActual.nombre === "+30") nombreArchivo = "mas_30";
+if (cartaActual.nombre === "-30") nombreArchivo = "menos_30";
+
+const btnDetener = document.getElementById("btn-detener");
+
+// Preparar video
+video.pause();
+video.removeAttribute('src');
+video.classList.remove("visible"); // ocultar antes de cambiar
+
+
+// Establecer nuevo src
+setCronometro(nombreArchivo);
+video.load();
+
+video.muted = false;
+video.volume = 1.0;
+
+
+
+
+video.classList.add("animar-entrada");
+setTimeout(() => video.classList.remove("animar-entrada"), 500);
+
+document.getElementById("resultado").innerText = "";
+if (
+  cartaActual.nombre !== "PIERDE EL TURNO" &&
+  cartaActual.nombre !== "INTERCAMBIO DE DESTINOS" &&
+  cartaActual.nombre !== "CARTA FANTASMA V2"
+) {
+  const btnListo = document.getElementById("btn-listo");
+  btnListo.style.display = "inline-block";
+  btnListo.classList.add("animado");
+  btnListo.classList.remove("boton-cuchara", "boton-tenedor");
+  btnListo.classList.add(turnoCuchara ? "boton-cuchara" : "boton-tenedor");
+}
+
+
+}
+
+
+
+function cancelarSacrificio() {
+  // Cierra popup y re-habilita UI
+  const pop = document.getElementById("popupSacrificio");
+  pop.style.display = "none";
+  setBloqueoUIporSacrificio(false);
+  setBotonSacarEstado(true, "⏳ En juego"); // seguir bloqueado hasta iniciar el turno
+
+  isSacrificio = false;
+
+  // Prepara cronómetro de 1:30 (normal)
+  const video = document.getElementById("cronometro");
+  video.pause();
+  video.removeAttribute("src");
+  video.classList.remove("visible");
+  
+
+  setCronometro("jugada_normal");  // 1:30
+  video.load();
+  video.muted = false;
+  video.volume = 1.0;
+
+  // Leyenda pedida
+  document.getElementById("resultado").innerHTML = `
+    <div class="mensaje-sacrificio">No haz hecho el sacrificio</div>
+  `;
+}
+
+
+
+function iniciarCronometro() {
+  const video = document.getElementById("cronometro");
+  const btnDetener = document.getElementById("btn-detener");
+  const btnListo = document.getElementById("btn-listo");
+
+  // --- DOBLE FUNCIÓN: leds + sfx al iniciar cada función ---
+if (dobleFuncion.activo) {
+  const dfOverlay = document.getElementById("dfLuzCamara");
+  if (dfOverlay) dfOverlay.style.display = "block";
+
+  const led1 = document.getElementById("dfLed1");
+  const led2 = document.getElementById("dfLed2");
+
+  if (dobleFuncion.rondasPendientes === 2 && led1){
+    led1.classList.remove("blink");
+    led1.classList.add("on");
+  }
+  if (dobleFuncion.rondasPendientes === 1 && led2){
+    led2.classList.remove("blink");
+    led2.classList.add("on");
+  }
+
+  // Soniditos (si no están los archivos, no pasa nada)
+  try { document.getElementById("sfxProyectorClick")?.play(); } catch(e){}
+  try { document.getElementById("sfxProyectorLoop")?.play()?.catch(()=>{}); } catch(e){}
+}
+
+  // --- DF: asegura el video correcto antes de reproducir ---
+if (dobleFuncion.activo) {
+  // si por cualquier motivo no quedó seteado el src de DF, lo forzamos
+  const esperado = location.origin + (location.origin.endsWith('/') ? '' : '/') + 'videos/doble_funcion.mp4';
+  // algunos navegadores guardan la ruta absoluta; comparamos por "termina con"
+  const tieneDF = isCronometro("doble_funcion");
+
+  if (!tieneDF) {
+    video.pause();
+    video.removeAttribute('src');
+    video.classList.remove('visible');
+    
+    video.src = 'videos/doble_funcion.mp4';
+    video.load();
+    video.currentTime = 0;
+  }
+}
+
+
+  btnListo.classList.remove("animado");
+btnListo.classList.add("oculto-suave");
+
+setTimeout(() => {
+  btnListo.style.display = "none";
+  btnListo.classList.remove("oculto-suave");
+}, 300);
+
+const mensajeCambiazo = document.getElementById("mensajeCambiazo");
+if (mensajeCambiazo) {
+  mensajeCambiazo.remove();
+}
+
+
+
+  video.play()
+    .then(() => {
+      video.classList.add("visible");
+      btnDetener.style.display = "inline-block";
+      btnDetener.disabled = false;
+
+    })
+    .catch(err => {
+      console.error("Error al iniciar cronómetro:", err);
+    });
+}
+
+
+
+    
+function detenerCronometro() {
+  if (!cartaActual) return;
+  video.pause();
+  ocultarDetener();
+  const base = duracionLogicaActual();
+  tiempoTranscurrido = Math.floor(Math.min(video.currentTime, base));
+  tiempoRestante = Math.max(0, base - tiempoTranscurrido); // si lo usás en algún texto
+  document.getElementById("popupConfirmacion").style.display = "flex";
+  document.getElementById("sonidoPopup").play();
+
+
+}
+
+
+  
+function responderConfirmacion(correcto) {
+  // 1) Cerrar popup
+  const pop = document.getElementById("popupConfirmacion");
+  if (pop) pop.style.display = "none";
+
+  // Evitar dobles registros
+  if (respuestaYaRegistrada) return;
+  respuestaYaRegistrada = true;
+
+  // 2) Estado de tiempo y log
+  const base = duracionLogicaActual();
+  const transcurrido = Math.min(base, tiempoTranscurrido);
+  window.historialJugadas.push({
+    equipo: turnoCuchara ? "cuchara" : "tenedor",
+    carta: cartaActual?.nombre || "-",
+    correcta: correcto
+  });
+
+  // 3) Ocultar botones de la ronda actual
+  const btnDetener = document.getElementById("btn-detener");
+  if (btnDetener) { btnDetener.style.display = "none"; btnDetener.disabled = true; }
+  const btnListo = document.getElementById("btn-listo");
+  if (btnListo) btnListo.style.display = "none";
+
+ 
+  // 5) Ramas de resultado
+  if (!correcto) {
+    // ❌ INCORRECTO
+    const sonidoIncorrecto = document.getElementById("sonidoIncorrecto");
+    try { sonidoIncorrecto?.play()?.catch(()=>{}); } catch(e){}
+
+      // 👉 Racha: al fallar, reiniciá la del equipo que estaba jugando
+      registrarFallo(turnoCuchara ? "cuchara" : "tenedor");
+
+    // DESCARGA ELÉCTRICA: el rival gana +2
+    if (cartaActual && cartaActual.nombre === "DESCARGA ELECTRICA") {
+      if (turnoCuchara) puntajeTenedor += 2; else puntajeCuchara += 2;
+
+      // Flash en marcador rival
+      const marcadorRival = turnoCuchara
+        ? document.getElementById("puntajeTenedor")
+        : document.getElementById("puntajeCuchara");
+      if (marcadorRival) {
+        marcadorRival.classList.add("puntaje-flash-rayo");
+        // 🔔 Además animá el +2 del rival
+if (marcadorRival) animarPuntaje(marcadorRival, +2);
+
+        setTimeout(() => marcadorRival.classList.remove("puntaje-flash-rayo"), 800);
+      }
+
+      // ¿Ganó alguien con ese +2?
+      if (puntajeCuchara >= puntosMeta || puntajeTenedor >= puntosMeta) {
+        verificarVictoriaManual();
+        return; // termina la partida
+      }
+
+      
+    }
+
+    // Puntos por incorrecta (Fantasma V2 puede tener puntaje negativo ya aplicado aparte)
+    let puntos = 0;
+    if (cartaActual?.nombre === "CARTA FANTASMA V2") {
+      puntos = -(cartaActual.puntajeRandom || 0);
+      if (turnoCuchara) puntajeCuchara += puntos; else puntajeTenedor += puntos;
+    }
+
+    document.getElementById("puntajeCuchara").innerText = puntajeCuchara;
+    document.getElementById("puntajeTenedor").innerText = puntajeTenedor;
+// 🔔 Animar la pérdida en el que falló
+const elQuePierde = document.getElementById(turnoCuchara ? 'puntajeCuchara' : 'puntajeTenedor');
+if (puntos) animarPuntaje(elQuePierde, puntos); // 'puntos' acá es negativo
+
+
+
+    // Mensaje (detalle por carta)
+let textoPuntos = "0 puntos";
+let clasePill = "neutro";
+
+// Si es Fantasma y se pierden puntos, mostrar "-N"
+if (cartaActual?.nombre === "CARTA FANTASMA V2") {
+  const perdidos = Math.abs(puntos || 0); // 'puntos' ya fue calculado arriba y es negativo
+  if (perdidos > 0) {
+    textoPuntos = `-${perdidos} punto${perdidos !== 1 ? 's' : ''}`;
+    clasePill = "perdido";
+  }
+}
+
+// Si es Descarga Eléctrica, avisar el +2 al rival
+let extraRival = "";
+if (cartaActual && cartaActual.nombre === "DESCARGA ELECTRICA") {
+  extraRival = `<span class="pill-puntos neutro">+2 al rival</span>`;
+}
+
+document.getElementById("resultado").innerHTML = `
+  <div class="mensaje-incorrecto">
+    <span class="emoji">❌</span> No se adivinó.
+    <span class="pill-puntos ${clasePill}">${textoPuntos}</span>
+    ${extraRival}
+  </div>
+`;
+
+
+    // Si veníamos de Sacrificio, mostrar leyendas y limpiar flag
+    if (isSacrificio) {
+      const extra = document.createElement("div");
+      extra.style.marginTop = "8px";
+      extra.innerHTML = '<span class="pill-puntos perdido">-1 punto</span><span class="pill-puntos neutro">+30s</span>';
+      document.getElementById("resultado").appendChild(extra);
+      isSacrificio = false;
+    }
+
+        // Doble Función: pasar a la segunda
+    if (dobleFuncion.activo) {
+      if (puntajeCuchara >= puntosMeta || puntajeTenedor >= puntosMeta) {
+        verificarVictoriaManual();
+        return; // 👈 termina si alguien ganó
+      }
+      setTimeout(() => continuarDobleFuncion(), 900);
+      return;
+    }
+
+
+    // Cambiar turno y habilitar “Sacar Carta” si no terminó el juego
+    turnoCuchara = !turnoCuchara;
+    actualizarTurno();
+
+    if (puntajeCuchara >= puntosMeta || puntajeTenedor >= puntosMeta) {
+      verificarVictoriaManual();
+      return;
+    }
+
+    const btnSacar = document.getElementById("btn-sacar");
+    if (btnSacar) { btnSacar.disabled = false; btnSacar.innerText = "👉 Sacar Carta"; }
+    try { cartaActual = null; } catch(e){}
+    return;
+  }
+
+  // ✅ CORRECTO
+  const sonidoCorrecto = document.getElementById("sonidoCorrecto");
+  try { sonidoCorrecto?.play()?.catch(()=>{}); } catch(e){}
+
+  registrarAcierto(turnoCuchara ? "cuchara" : "tenedor");
+
+
+  // --- SACRIFICIO (acertado) ---
+  if (isSacrificio) {
+    let premio;
+    if (transcurrido <= 30) premio = 4;
+    else if (transcurrido <= 60) premio = 3;
+    else if (transcurrido <= 90) premio = 2;
+    else premio = 1;
+
+    if (turnoCuchara) puntajeCuchara += premio; else puntajeTenedor += premio;
+
+    document.getElementById("puntajeCuchara").innerText = puntajeCuchara;
+    document.getElementById("puntajeTenedor").innerText = puntajeTenedor;
+
+    const el = document.getElementById(turnoCuchara ? 'puntajeCuchara' : 'puntajeTenedor');
+    animarPuntaje(el, premio);
+
+
+    document.getElementById("resultado").innerHTML = `
+      <div class="mensaje-correcto">
+        <span class="emoji">✅</span> ¡Correcto!
+        <span class="puntos">+${premio} punto${premio !== 1 ? 's' : ''}</span>
+      </div>
+      <div style="margin-top:8px;">
+        <span class="pill-puntos perdido">-1 punto</span>
+        <span class="pill-puntos neutro">+30s</span>
+      </div>
+    `;
+
+
+
+    // ¿Ganó alguien?
+    if (puntajeCuchara >= puntosMeta || puntajeTenedor >= puntosMeta) {
+      verificarVictoriaManual();
+      return; // termina partida
+    }
+
+    // Cerrar Sacrificio y seguir ronda normal
+    isSacrificio = false;
+    turnoCuchara = !turnoCuchara;
+    actualizarTurno();
+
+    // 🔓 Habilitar botón “Sacar Carta”
+    const btnSacar = document.getElementById("btn-sacar");
+    if (btnSacar) { btnSacar.disabled = false; btnSacar.innerText = "👉 Sacar Carta"; }
+
+    try { cartaActual = null; } catch(e){}
+    return;
+  }
+
+  // --- PUNTAJE NORMAL (incluye +30, -30, RÁFAGA, COMODÍN, AMULETO, etc.) ---
+  let puntos = 0;
+  if (cartaActual?.nombre === "CARTA FANTASMA V2") {
+    puntos = cartaActual.puntajeRandom || 0;
+  } else if (cartaActual?.nombre === "RÁFAGA") {
+    puntos = 1;
+  } else if (cartaActual?.nombre === "+30") {
+    if (transcurrido <= 30) puntos = 4;
+    else if (transcurrido <= 60) puntos = 3;
+    else if (transcurrido <= 90) puntos = 2;
+    else puntos = 1;
+  } else if (cartaActual?.nombre === "-30") {
+    puntos = (transcurrido <= 30) ? 2 : 1;
+  } else {
+    // Normal (90s)
+    if (transcurrido <= 30) puntos = 3;
+    else if (transcurrido <= 60) puntos = 2;
+    else puntos = 1;
+  }
+  if (cartaActual?.nombre === "COMODIN") puntos *= 2;
+
+  if (turnoCuchara) {
+    puntajeCuchara += puntos;
+    if (cartaActual?.nombre === "AMULETO") puntajeTenedor -= puntos;
+  } else {
+    puntajeTenedor += puntos;
+    if (cartaActual?.nombre === "AMULETO") puntajeCuchara -= puntos;
+  }
+
+  document.getElementById("puntajeCuchara").innerText = puntajeCuchara;
+  document.getElementById("puntajeTenedor").innerText = puntajeTenedor;
+
+  // 🔔 Animar el puntaje del equipo que sumó
+const elGanador = document.getElementById(turnoCuchara ? 'puntajeCuchara' : 'puntajeTenedor');
+animarPuntaje(elGanador, +puntos);
+
+// Si fue AMULETO, también animá la resta del rival
+if (cartaActual?.nombre === "AMULETO") {
+  const elRival = document.getElementById(turnoCuchara ? 'puntajeTenedor' : 'puntajeCuchara');
+  animarPuntaje(elRival, -puntos);
+}
+
+
+  if (cartaActual?.nombre === "AMULETO") {
+    document.getElementById("resultado").innerHTML = `
+      <div class="mensaje-amuleto">
+        <div class="linea1">🪬 <strong>AMULETO ACTIVADO</strong></div>
+        <div class="linea2">+${puntos} y -${puntos} al rival</div>
+      </div>`;
+  } else {
+    document.getElementById("resultado").innerHTML = `
+      <div class="mensaje-correcto">
+        <span class="emoji">✅</span> ¡Correcto!
+        <span class="puntos">+${puntos} punto${puntos !== 1 ? 's' : ''}</span>
+      </div>`;
+  }
+
+
+    // Doble Función: mostrar puntaje y continuar
+  if (dobleFuncion.activo) {
+    if (puntajeCuchara >= puntosMeta || puntajeTenedor >= puntosMeta) {
+      verificarVictoriaManual();
+      return; // 👈 muestra ganador sin esperar segunda jugada
+    }
+    setTimeout(() => continuarDobleFuncion(), 900);
+    return;
+  }
+
+
+  // ¿Ganó alguien?
+  if (puntajeCuchara >= puntosMeta || puntajeTenedor >= puntosMeta) {
+    verificarVictoriaManual();
+    return; // termina partida
+  }
+
+
+
+  // Cambio de turno y habilitar “Sacar Carta”
+  turnoCuchara = !turnoCuchara;
+  actualizarTurno();
+
+  const btnSacar = document.getElementById("btn-sacar");
+  if (btnSacar) { btnSacar.disabled = false; btnSacar.innerText = "👉 Sacar Carta"; }
+
+  try { cartaActual = null; } catch(e){}
+}
+
+
+function maximosCambiazoPermitidos(puntaje) {
+  return Math.floor(puntaje / 10); // 1 por cada 10 puntos
+}
+
+function renderEstadisticasFinales() {
+  const totalJugadas = historialJugadas.length;
+  const adivinadas = historialJugadas.filter(j => j.correcta).length;
+  const falladas = totalJugadas - adivinadas;
+  const efectividad = totalJugadas > 0 ? Math.round((adivinadas / totalJugadas) * 100) : 0;
+
+  const html = `
+    <div class="mensaje-final">
+      <h3>📊 Estadísticas finales</h3>
+      <p><strong>Películas jugadas:</strong> ${totalJugadas}</p>
+      <p><strong>Adivinadas:</strong> ✅ ${adivinadas}</p>
+      <p><strong>Falladas:</strong> ❌ ${falladas}</p>
+      <p><strong>Efectividad:</strong> ${efectividad}%</p>
+    </div>`;
+  const cartel = document.getElementById("cartelGanador");
+  if (cartel) cartel.innerHTML += html;
+}
+
+  
+
+function actualizarTurno() {
+  const turnoText = turnoCuchara ? "TURNO: TEAM CUCHARA" : "TURNO: TEAM TENEDOR";
+  const color = turnoCuchara ? "red" : "yellow";
+  const botonColor = turnoCuchara ? "#d62828" : "#f7b801";
+  
+  
+  const btnSacar = document.getElementById("btn-sacar");
+  const btnDetener = document.getElementById("btn-detener");
+  if (btnSacar && btnDetener) {
+  btnSacar.classList.remove("boton-cuchara", "boton-tenedor");
+  btnDetener.classList.remove("boton-cuchara", "boton-tenedor");
+
+  const btnListo = document.getElementById("btn-listo");
+btnListo.classList.remove("boton-cuchara", "boton-tenedor");
+
+if (turnoCuchara) {
+  btnSacar.classList.add("boton-cuchara");
+  btnDetener.classList.add("boton-cuchara");
+  btnListo.classList.add("boton-cuchara");
+} else {
+  btnSacar.classList.add("boton-tenedor");
+  btnDetener.classList.add("boton-tenedor");
+  btnListo.classList.add("boton-tenedor");
+}
+}
+
+   
+  // 👇 Pegá acá lo siguiente:
+  const escudoCuchara = document.getElementById("escudo-cuchara");
+  const escudoTenedor = document.getElementById("escudo-tenedor");
+
+  // Remover animaciones previas
+  escudoCuchara.classList.remove("escudo-activo");
+  escudoTenedor.classList.remove("escudo-activo");
+
+  
+  
+  const cartelera = document.getElementById("turnoActual");
+  if (cartelera) {
+  cartelera.classList.remove("turno-cuchara", "turno-tenedor");
+  cartelera.classList.add(turnoCuchara ? "turno-cuchara" : "turno-tenedor");
+  }
+
+  document.body.style.backgroundImage = turnoCuchara
+  ? "url('./assets/FondoCuchara.png')"
+  : "url('./assets/FondoTenedor.png')";
+
+
+  // Cambiar imágenes según turno y aplicar animación
+  if (turnoCuchara) {
+    escudoCuchara.src = "./assets/escudo_team_cuchara.png";
+    escudoTenedor.src = "./assets/escudo_team_tenedor_gris.png";
+    escudoCuchara.classList.add("escudo-activo");
+  } else {
+    escudoCuchara.src = "./assets/escudo_team_cuchara_gris.png";
+    escudoTenedor.src = "./assets/escudo_team_tenedor.png";
+    escudoTenedor.classList.add("escudo-activo");
+  }
+}
+
+function ocultarDetener() {
+  const btnDetener = document.getElementById("btn-detener");
+  if (btnDetener) {
+    btnDetener.style.display = "none";
+    btnDetener.disabled = true;
+  }
+}
+
+
+function resetearJuego() {
+// Reset de diamantes y ronda
+diamantes = { cuchara: 0, tenedor: 0 };
+rondaActual = 1;
+renderRackDiamantes();  // vuelve a pintar vacíos
+
+// Limpieza de stats jugador (para que el próximo MVP sea correcto)
+statsJugadores.cuchara = {};
+statsJugadores.tenedor = {};
+document.getElementById('mvp-box')?.setAttribute('hidden','true');
+
+// Ocultar cualquier overlay final si quedara abierto
+document.getElementById('overlayStats')?.remove();
+
+    // Blindaje por si el reset flotante hubiese quedado visible:
+  const btnReset = document.getElementById('btn-reset');
+  if (btnReset) btnReset.style.display = 'none';
+
+  const panel = document.getElementById('panel-ajustes');
+  if (panel) panel.style.display = 'none'; // cerrar ajustes si estaba abierto
+// 🔄 reinicio por partida
+if (typeof inicializarContadorCartas === "function") inicializarContadorCartas();
+
+// Por si quedó algo de DF vivo, limpiar siempre
+apagarLucesDobleFuncion();
+
+
+usosIntercambioDestinos = 0;      // Intercambio máx. por partida
+usosCambiazo = { cuchara: 0, tenedor: 0 }; // reseteo por equipo
+ultimaCartaNombre = "";           // evita bloqueo por anti-repetición
+dobleFuncion = { activo: false, rondasPendientes: 0 }; // limpia DF
+
+turnosEnRonda = 0;
+intercambioPendiente = true;
+
+
+  const sonidoVictoria = document.getElementById("sonidoVictoria");
+if (sonidoVictoria) {
+  sonidoVictoria.pause();
+  sonidoVictoria.currentTime = 0;
+}
+  puntajeCuchara = 0;
+  puntajeTenedor = 0;
+  window.historialJugadas = [];
+  turnoCuchara = true;
+  // 🔄 LIMPIAR MVP (estadística por jugador)
+  statsJugadores.cuchara = {};
+  statsJugadores.tenedor = {};
+  renderMVP?.(); // oculta el box si no hay datos
+  // Reiniciar baseline de turno
+  snapshotInicioTurno.cuchara = 0;
+  snapshotInicioTurno.tenedor = 0;
+  usosCambiazo = {
+  cuchara: 0,
+  tenedor: 0
+  };
+  actualizarTurno();
+  
+
+  document.getElementById("puntajeCuchara").innerText = "0";
+  document.getElementById("puntajeTenedor").innerText = "0";
+  document.getElementById("cartaContainer").innerHTML = "";
+  document.getElementById("resultado").innerText = "";
+
+  // Limpiar y preparar video correctamente
+  video.pause();
+  video.src = "";
+  video.load();
+  video.classList.remove("visible");
+  document.getElementById("btn-detener").style.display = "none";
+  document.body.classList.remove("fondo-fantasma");
+  
+
+  const btnSacar = document.getElementById("btn-sacar");
+btnSacar.disabled = false;
+btnSacar.innerText = "👉 Sacar Carta";
+
+// Ocultar mensaje flotante fantasma si quedó activo
+document.getElementById("puntajeFantasma").style.display = "none";
+
+const overlay = document.querySelector(".overlay-victoria");
+if (overlay) overlay.remove();
+
+// volver a mostrar banner de turno al reiniciar
+const bannerTurno = document.getElementById("turn-owner");
+if (bannerTurno) {
+  bannerTurno.style.display = "block";
+  actualizarBannerPorTurno(); // 👈 asegura que muestre al jugador correcto
+}
+
+
+}
+
+
+
+function saltarJugadorActual(){
+  try{
+    // Chequeo opcional: no permitir mientras corre el cronómetro
+    const v = document.getElementById('cronometro');
+    const cronoVisible = v && v.classList.contains('visible') && !v.paused;
+    if (cronoVisible) return;
+
+    const equipo = turnoCuchara ? 'cuchara' : 'tenedor';
+    const lista = participantes[equipo] || [];
+    if (!lista.length) return;
+
+    // Avanza al siguiente jugador del mismo equipo
+    idxJugador[equipo] = (idxJugador[equipo] + 1) % lista.length;
+
+    // Actualiza el banner “Quién juega”
+    actualizarBannerPorTurno();
+
+    // 🔴 Eliminamos el bloque que mostraba mensaje en #resultado
+  }catch(e){}
+}
+
+// Precarga de los PNG de impacto para evitar jank la primera vez
+function preloadImpactoImgs(){
+  ['assets/impacto_cuchara.png', 'assets/impacto_tenedor.png'].forEach(src=>{
+    const img = new Image();
+    img.src = src;
+  });
+}
+window.addEventListener('DOMContentLoaded', preloadImpactoImgs);
+
+
+function alternarPantallaCompleta() {
+  const fullscreenBtn = document.getElementById("btn-fullscreen");
+
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().then(() => {
+      fullscreenBtn.innerText = "❌";
+    }).catch(err => {
+      console.error("Error al intentar pantalla completa:", err);
+    });
+  } else {
+    document.exitFullscreen().then(() => {
+      fullscreenBtn.innerText = "🖥";
+    }).catch(err => {
+      console.error("Error al salir de pantalla completa:", err);
+    });
+  }
+}
+
+
+
+actualizarTurno();
+
+function iniciarJuego() {
+  const pantalla = document.getElementById("pantallaInicio");
+  const musica = document.getElementById("musicaInicio");
+  const sonido = document.getElementById("sonidoStart");
+  const inputMeta = document.getElementById("metaPuntos");
+  puntosMeta = parseInt(inputMeta.value) || 15;
+
+  // === RONDAS / DIAMANTES ===
+const cbDiam = document.getElementById('usarDiamantes');            // checkbox “Jugar por diamantes (mejor de)”
+usarDiamantes = !!(cbDiam && cbDiam.checked);
+
+const inpDiam = document.getElementById('cantDiamantes');           // hidden/selector con el número (p.ej. 3)
+diamantesParaGanar = parseInt(inpDiam?.value || '3', 10);
+
+diamantes = { cuchara: 0, tenedor: 0 };                             // resetea marcador de diamantes
+rondaActual = 1;                                                    // empezamos en Ronda 1
+
+renderRackDiamantes();                                              // pinta los rombitos (vacíos/llenos)
+if (usarDiamantes) mostrarRonda(1);                                  // overlay “RONDA 1” + gong
+
+
+  if (musica && !musica.paused) musica.pause();
+
+  if (sonido) {
+    sonido.currentTime = 0;
+    sonido.play().catch(e => console.log("No se pudo reproducir sonido:", e));
+  }
+
+  pantalla.classList.add("zoom-out");
+    
+    document.getElementById("escudo-cuchara").classList.add("escudo-drop");
+    document.getElementById("escudo-tenedor").classList.add("escudo-drop");
+
+
+  setTimeout(() => {
+    pantalla.style.display = "none";
+    if (typeof actualizarTurno === "function") actualizarTurno();
+  }, 600);
+}
+
+
+// Listener ÚNICO de teclado: orden de prioridad por estado de la UI
+document.addEventListener("keydown", (event) => {
+  const tecla = event.key.toLowerCase();
+
+  // 1) Si está abierto el popup de SACRIFICIO → sólo aceptamos 5 / 7
+  if (modalSacrificioAbierto) {
+    if (tecla === "s") { event.preventDefault(); aceptarSacrificio(); }
+    if (tecla === "o") { event.preventDefault(); cancelarSacrificio(); }
+    return; // bloquea cualquier otra tecla mientras está el modal
+  }
+
+  // 2) Si está abierto el popup de CONFIRMACIÓN (película) → S / O
+  const popConf = document.getElementById("popupConfirmacion");
+  if (popConf && getComputedStyle(popConf).display !== "none") {
+    if (tecla === "s") { event.preventDefault(); responderConfirmacion(true); }
+    if (tecla === "o") { event.preventDefault(); responderConfirmacion(false); }
+    return;
+  }
+
+  // 3) Atajos globales (cuando NO hay modales activos)
+  if (tecla === "1") {
+    const btnSacar = document.getElementById("btn-sacar");
+    if (btnSacar && !btnSacar.disabled) sacarCarta();
+  }
+
+ if (tecla === " ") {
+  const btnDetener = document.getElementById("btn-detener");
+  const popConf = document.getElementById("popupConfirmacion");
+  const video = document.getElementById("cronometro");
+  if (
+    btnDetener &&
+    getComputedStyle(btnDetener).display !== "none" &&
+    (!popConf || getComputedStyle(popConf).display === "none") &&
+    video && !video.paused
+  ) {
+    event.preventDefault();
+    detenerCronometro();
+  }
+}
+
+
+
+  
+  if (tecla === "e") abrirEditorPuntaje();
+  if (event.key === "Escape") cerrarEditorPuntaje();
+
+  if (tecla === "enter" || event.keyCode === 13) {
+    const pantalla = document.getElementById("pantallaInicio");
+    if (pantalla && pantalla.style.display !== "none") iniciarJuego();
+  }
+});
+
+
+function cambiarPuntos(valor) {
+  const input = document.getElementById("metaPuntos");
+  let actual = parseInt(input.value);
+  actual += valor;
+  if (actual < 1) actual = 1;
+  input.value = actual;
+  document.getElementById("valorPuntos").textContent = actual;
+}
+
+const botonFS = document.getElementById("btn-fullscreen");
+
+function cambiarDiamantes(delta){
+  const inp = document.getElementById('cantDiamantes');
+  let val = parseInt(inp.value || '3', 10);
+  val = Math.max(1, Math.min(9, val + delta));
+  inp.value = val;
+  const lbl = document.getElementById('valorDiamantes');
+  if (lbl) lbl.textContent = val;
+}
+
+
+
+
+function togglePantallaCompleta() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch((err) => {
+      console.warn(`Error al entrar en pantalla completa: ${err.message}`);
+    });
+  } else {
+    document.exitFullscreen().catch((err) => {
+      console.warn(`Error al salir de pantalla completa: ${err.message}`);
+    });
+  }
+}
+
+if (botonFS) {
+  botonFS.addEventListener("click", togglePantallaCompleta);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key.toLowerCase() === "f") {
+    togglePantallaCompleta();
+  }
+});
+
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "2") {
+    const btnListo = document.getElementById("btn-listo");
+    if (btnListo.style.display !== "none") {
+      btnListo.click();
+    }
+  }
+});
+
+
+function renderRackDiamantes(){
+  const rc = document.getElementById('rackCuchara');
+  const rt = document.getElementById('rackTenedor');
+  if (!rc || !rt) return;
+
+  const make = (ganados, equipo) => {
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < diamantesParaGanar; i++){
+      const el = document.createElement('span');
+      el.className = 'diamond ' + equipo + (i < ganados ? ' activo' : '');
+
+      const facets = document.createElement('img');
+      facets.className = 'facets';
+      facets.src = './assets/diamond.svg';
+      facets.alt = '';
+      el.appendChild(facets);
+
+      frag.appendChild(el);
+    }
+    return frag;
+  };
+
+  rc.replaceChildren(make(diamantes.cuchara, 'cuchara'));
+  rt.replaceChildren(make(diamantes.tenedor, 'tenedor'));
+}
+
+// === Init NUEVO del rack de diamantes ===
+function initRacksDiamantes(totalRondas){
+  // Asegura variables del sistema nuevo
+  if (typeof diamantesParaGanar === 'undefined') window.diamantesParaGanar = 3;
+  if (typeof diamantes === 'undefined') window.diamantes = { cuchara: 0, tenedor: 0 };
+
+  // Setear cuántos diamantes hacen ganar la serie
+  diamantesParaGanar = Number(totalRondas) || 3;
+
+  // Resetear contadores de diamantes
+  diamantes.cuchara = 0;
+  diamantes.tenedor = 0;
+
+  // Pintar el rack acorde al estado actual
+  renderRackDiamantes();
+}
+
+// Anti-flash: mantener el tinte de equipo durante el fade-out
+function celebracionDiamante(equipo){
+  const overlay = document.getElementById('cineDiamanteOverlay');
+  if (!overlay) return;
+
+  window.enCelebracionDiamante = true;
+  clearTimeout(window._timerCelebracionDiamante);
+
+  // Aseguro solo una clase de equipo
+  overlay.classList.remove('cuchara','tenedor');
+  overlay.classList.add(equipo);
+
+  // Muestro (en el siguiente frame para que transicione)
+  requestAnimationFrame(() => overlay.classList.add('show'));
+
+  // Apago y recién después quito la clase de equipo
+  window._timerCelebracionDiamante = setTimeout(() => {
+    overlay.classList.remove('show');
+
+    const limpiar = () => {
+      overlay.classList.remove('cuchara','tenedor');
+      window.enCelebracionDiamante = false;
+    };
+    overlay.addEventListener('transitionend', limpiar, { once:true });
+    // Fallback por si no dispara transitionend
+    setTimeout(limpiar, 350);
+  }, 520);
+}
+
+
+
+
+function ganarDiamante(equipo){
+  renderRackDiamantes();
+
+  // SFX prioritario
+  if (typeof playSfxDiamantePrioritario === 'function') {
+    try { playSfxDiamantePrioritario(); } catch(e){}
+  } else {
+    const sfx = document.getElementById('sfxDiamante');
+    try { sfx.currentTime = 0; sfx.play().catch(()=>{}); } catch(e){}
+  }
+
+  const rack = document.getElementById(equipo === 'cuchara' ? 'rackCuchara' : 'rackTenedor');
+  if (!rack) return;
+  const activos = rack.querySelectorAll('.diamond.activo');
+  const ultimo  = activos[activos.length - 1];
+  if (!ultimo) return;
+
+  ultimo.classList.add('win-burst');
+  setTimeout(()=> ultimo.classList.remove('win-burst'), 650);
+
+  const img = ultimo.querySelector('img.facets') || ultimo;
+  try { miniCinematicaDiamante(img); } catch(e){}
+  tintePorDiamante(equipo);
+  celebracionDiamante(equipo);  // este overlay ya maneja show/ocultar limpio【:contentReference[oaicite:10]{index=10}】
+}
+
+
+
+
+
+function mostrarRonda(n){
+  const o = document.getElementById('overlayRonda');
+  const t = document.getElementById('textoRonda');
+  if (!o || !t) return;
+  t.textContent = `RONDA ${n}`;
+  o.style.display = 'flex';
+  const gong = document.getElementById('sonidoGong');
+  try { gong?.play()?.catch(()=>{}); } catch(e){}
+  setTimeout(()=>{ o.style.display = 'none'; }, 2000);
+}
+
+
+
+function resetearMarcadoresDePuntos(){
+  puntajeCuchara = 0; puntajeTenedor = 0;
+  document.getElementById('puntajeCuchara').innerText = '0';
+  document.getElementById('puntajeTenedor').innerText = '0';
+  document.getElementById('resultado')?.replaceChildren();
+  document.getElementById('cartaContainer')?.replaceChildren();
+
+  // limpiar cronómetro/video si quedó visible
+  const video = document.getElementById('cronometro');
+  if (video) { try{ video.pause(); }catch(e){} video.src=''; video.load(); video.classList.remove('visible'); }
+
+  // ocultar controles de la ronda anterior
+  document.getElementById('btn-listo')?.style?.setProperty('display','none');
+  document.getElementById('btn-detener')?.style?.setProperty('display','none');
+
+  // volver a habilitar “Sacar Carta”
+  const btnSacar = document.getElementById('btn-sacar');
+  if (btnSacar) { btnSacar.disabled = false; btnSacar.innerText = '👉 Sacar Carta'; }
+}
+
+
+function iniciarNuevaRonda(){
+  rondaActual++;
+  mostrarRonda(rondaActual);
+  resetearMarcadoresDePuntos();
+  // Alternar quién empieza la próxima ronda
+turnoCuchara = !turnoCuchara;
+actualizarBannerPorTurno(); // refresca el cartel superior
+actualizarTurno?.(); // refresca fondo, escudos y clases de botones según el equipo que arranca
+
+
+  const btnSacar = document.getElementById('btn-sacar');
+if (btnSacar) { btnSacar.disabled = false; btnSacar.innerText = '👉 Sacar Carta'; }
+
+
+
+  // opcional: alternar quién empieza, si querés.
+}
+
+function mostrarGanadorFinalPorDiamantes(equipo){
+  // Nombre limpio del ganador
+  const ganador = (equipo === 'cuchara') ? 'TEAM CUCHARA' : 'TEAM TENEDOR';
+
+  // Bloquear acciones de juego
+  const btnSacar = document.getElementById('btn-sacar');
+  if (btnSacar) btnSacar.disabled = true;
+
+  // Sonido de victoria (si está)
+  const sonidoVictoria = document.getElementById('sonidoVictoria');
+  try { sonidoVictoria?.play()?.catch(()=>{}); } catch(e){}
+
+  // Estadísticas finales
+  const totalJugadas = Array.isArray(window.historialJugadas) ? window.historialJugadas.length : 0;
+  const adivinadas   = totalJugadas ? window.historialJugadas.filter(j => j.correcta).length : 0;
+  const falladas     = totalJugadas - adivinadas;
+  const efectividad  = totalJugadas ? Math.round((adivinadas / totalJugadas) * 100) : 0;
+  // Ocultar cartel de "TURNO" mientras está el overlay final
+  const banner = document.getElementById('turn-owner');
+  if (banner) banner.style.display = 'none';
+
+
+  // MVP (mejor mímica) recorriendo stats por equipo
+  let mvpNombre = '—', mvpPuntos = 0, mvpEq = '';
+  if (window.statsJugadores){
+    ['cuchara','tenedor'].forEach(eq=>{
+      const mapa = window.statsJugadores[eq] || {};
+      Object.entries(mapa).forEach(([nom, pts])=>{
+        if (pts > mvpPuntos) { mvpPuntos = pts; mvpNombre = nom; mvpEq = eq; }
+      });
+    });
+  }
+
+  // Cartel ganador + overlay
+  const resultado = document.getElementById("resultado");
+  if (!resultado) return;
+  resultado.innerHTML = `
+    <div class="overlay-victoria"></div>
+    <div id="cartelGanador" class="cartel-ganador invisible">
+      <div class="icono-final">🏆</div>
+      <div class="texto-ganador">${ganador}</div>
+      <div class="subtexto-ganador">ganó ${diamantesParaGanar} diamantes</div>
+      <button class="btn-volver" onclick="volverAlInicio({ reset: true })">🏠 Volver al inicio</button>
+    </div>
+  `;
+
+  // Panel de estadísticas finales
+  const estadisticasHTML = `
+    <div id="overlayStats">
+      <div class="stats-panel">
+        <h2>📊 ESTADÍSTICAS FINALES</h2>
+        <div class="campeon-titulo">
+        <span class="txt">💎💎💎</span>
+        </div>
+
+        <div class="ganador-box"><strong>Equipo ganador:</strong> ${ganador}</div>
+
+        <div id="mvp-box" class="mvp-box"${mvpPuntos>0 ? '' : ' hidden'}>
+          <strong>Mejor mímica:</strong>
+          <span id="mvp-nombre">${mvpNombre}</span>
+          <span id="mvp-puntos">${mvpPuntos ? ` — ${mvpPuntos} acierto${mvpPuntos!==1?'s':''} (${mvpEq.toUpperCase()})` : ''}</span>
+        </div>
+
+        
+
+          <div><strong>Películas jugadas:</strong> ${totalJugadas}</div>
+          <div><strong>Adivinadas:</strong> ✅ ${adivinadas}</div>
+          <div><strong>Falladas:</strong> ❌ ${falladas}</div>
+          <div><strong>Efectividad:</strong> ${efectividad}%</div>
+          <div class="stats-grid">
+          <div class="mvp-box" id="mvp-box" hidden>
+          ⭐ Mejor Mímica: <span id="mvp-nombre"></span><span id="mvp-puntos"></span>
+          </div>
+        </div>
+        <h3>🏅 Ranking de Mímica</h3>
+        <ol id="ranking-mimica" class="ranking"></ol>
+
+        <button class="btn-volver" onclick="volverAlInicio({ reset: true })">🏠 Volver al inicio</button>
+      </div>
+    </div>
+  `;
+
+  const cartel = document.getElementById("cartelGanador");
+if (cartel) {
+  cartel.insertAdjacentHTML("afterend", estadisticasHTML);
+  cartel.remove(); // 👈 quitamos el cartel para que no capture hover/click detrás
+}
+
+renderRankingMimica();
+
+}
+
+
+
+function otorgarDiamante(equipo){
+  // suma protegida
+  diamantes[equipo] = Math.min(diamantesParaGanar, (diamantes[equipo]||0) + 1);
+
+  // animación + SFX prioritario + repintado de rack
+  ganarDiamante(equipo);
+
+  // decide si termina la serie o arranca la próxima ronda
+  if (diamantes[equipo] >= diamantesParaGanar){
+    mostrarGanadorFinalPorDiamantes(equipo);
+  } else {
+    iniciarNuevaRonda();
+  }
+}
+
+
+
+
+
+function mostrarPopupSacrificio() {
+  const pop = document.getElementById("popupSacrificio");
+  pop.style.display = "flex";
+  setBloqueoUIporSacrificio(true); // 👈 activa el “modo modal” y deshabilita botones
+}
+
+function aceptarSacrificio() {
+  // 🔊 Sonido al confirmar “Sí” (tecla 5 / botón)
+  const sYes = document.getElementById("sonidoSacrificioSi");
+  if (sYes) { sYes.currentTime = 0; sYes.play().catch(() => {}); }
+
+  // ✅ aplicar fondo oscuro SOLO si dijo que sí
+  document.body.classList.add("fondo-fantasma");
+  document.body.style.backgroundImage = "url('./assets/fondo_sacrificio.png')"; // 👈 fuerza el fondo oscuro
+
+  // Cierra popup y re-habilita UI
+  const pop = document.getElementById("popupSacrificio");
+  pop.style.display = "none";
+  setBloqueoUIporSacrificio(false);
+
+  // Marca estado
+  isSacrificio = true;
+  cartaActual.duracion = 120;
+  setBotonSacarEstado(true); // usa el mismo helper que en el resto
+
+
+  const btnListo = document.getElementById("btn-listo");
+  if (btnListo) btnListo.style.display = "inline-block"; // por si no estuviera visible
+
+
+  // -1 punto al equipo del turno
+  if (turnoCuchara) {
+    puntajeCuchara = Math.max(0, (puntajeCuchara|0) - 1);
+    document.getElementById("puntajeCuchara").innerText = puntajeCuchara;
+  } else {
+    puntajeTenedor = Math.max(0, (puntajeTenedor|0) - 1);
+    document.getElementById("puntajeTenedor").innerText = puntajeTenedor;
+  }
+
+  
+
+  // Prepara cronómetro de 2:00 (+30s)
+  const video = document.getElementById("cronometro");
+  video.pause();
+  video.removeAttribute("src");
+  video.classList.remove("visible");
+  
+
+  setCronometro("sacrificio_2min");
+  video.load();
+  video.muted = false;
+  video.volume = 1.0;
+
+  
+
+// Mensaje + leyenda de puntos
+document.getElementById("resultado").innerHTML =
+  `<div class="mensaje-sacrificio">
+     🩸 HAS HECHO UN SACRIFICIO
+     <span class="pill-puntos perdido">-1 punto</span>
+     <span class="pill-puntos neutro">+30s</span>
+   </div>`;
+
+
+  // Luego el jugador toca “Estoy Listo” → iniciarCronometro()
+}
+
+
+function cancelarSacrificio() {
+  // cierra popup y desbloquea
+  // 🚫 quitar fondo oscuro si dijo que no
+  document.body.classList.remove("fondo-fantasma");
+  const pop = document.getElementById("popupSacrificio");
+  pop.style.display = "none";
+  setBloqueoUIporSacrificio(false);   // 👈 importante
+  isSacrificio = false;
+
+  // carga 1:30 (ya lo tenés así en la versión “completa”)
+  const video = document.getElementById("cronometro");
+  video.pause();
+  video.removeAttribute("src");
+  video.classList.remove("visible");
+  
+  setCronometro("jugada_normal");
+  video.load();
+  video.muted = false;
+  video.volume = 1.0;
+
+  document.getElementById("resultado").innerHTML =
+    `<div class="mensaje-sacrificio">No has hecho el sacrificio</div>`;
+}
+
+function continuarDobleFuncion(){
+  // Termina la función actual
+  dobleFuncion.rondasPendientes--;
+  // Mantener overlay y setear leds (1ª lista, 2ª esperando)
+const dfOverlay = document.getElementById("dfLuzCamara");
+if (dfOverlay) dfOverlay.style.display = "block";
+const led1 = document.getElementById("dfLed1");
+const led2 = document.getElementById("dfLed2");
+if (led1){ led1.classList.remove("blink"); led1.classList.add("on"); }
+if (dobleFuncion.rondasPendientes > 0 && led2){
+  led2.classList.remove("on");
+  led2.classList.add("blink");
+}
+
+
+  // ¿Queda la 2ª?
+  if (dobleFuncion.rondasPendientes > 0) {
+    // Preparar cronómetro otra vez (1:30 legendario)
+    const video = document.getElementById("cronometro");
+    video.pause();
+    video.removeAttribute("src");
+    video.classList.remove("visible");
+    
+    setCronometro("doble_funcion");
+    video.load();
+    video.muted = false;
+    video.volume = 1.0;
+
+    // Reactivar "Estoy Listo" para la 2ª
+    const btnListo = document.getElementById("btn-listo");
+    btnListo.style.display = "inline-block";
+    btnListo.classList.add("animado");
+    btnListo.classList.remove("boton-cuchara", "boton-tenedor");
+    btnListo.classList.add(turnoCuchara ? "boton-cuchara" : "boton-tenedor");
+
+    // Mensaje
+     document.getElementById("resultado").innerHTML =
+    '<div class="mensaje-df-azul">🎬 Prepará la <b>2ª función</b>…</div>';
+
+
+
+
+    // Permitimos que el “ended” vuelva a registrar
+    respuestaYaRegistrada = false;
+    return;
+  }
+
+  // Si no queda ninguna → terminar DF
+  finalizarDobleFuncion();
+}
+
+function finalizarDobleFuncion(){
+  dobleFuncion.activo = false;
+  dobleFuncion.rondasPendientes = 0;
+  // Quitar fondo especial DF antes de restaurar el fondo del turno
+  document.body.classList.remove("fondo-doble");
+  document.body.style.backgroundImage = ""; // limpiar override; actualizarTurno() aplica el fondo de equipo
+
+  const dfOverlay = document.getElementById("dfLuzCamara");
+if (dfOverlay) dfOverlay.style.display = "none";
+["dfLed1","dfLed2"].forEach(id=>{
+  const el = document.getElementById(id);
+  if (el) el.classList.remove("on","blink");
+});
+try { const loop = document.getElementById("sfxProyectorLoop"); if (loop){ loop.pause(); loop.currentTime = 0; } } catch(e){}
+try { const click = document.getElementById("sfxProyectorClick"); if (click){ click.pause(); click.currentTime = 0; } } catch(e){}
+
+
+  // Limpiar carta en pantalla
+  const cc = document.getElementById("cartaContainer");
+  if (cc) cc.innerHTML = "";
+
+  // Habilitar “Sacar Carta” si no terminó el juego
+  const btnSacar = document.getElementById("btn-sacar");
+  if (btnSacar) {
+    btnSacar.disabled = false;
+    btnSacar.innerText = "👉 Sacar Carta";
+  }
+
+  // Ceder turno recién ahora
+  turnoCuchara = !turnoCuchara;
+  actualizarTurno();
+
+  const res = document.getElementById("resultado");
+const fin = document.createElement("div");
+fin.className = "mensaje-df-azul";
+fin.innerHTML = '🎬 <b>Doble Función</b> finalizada';
+res.appendChild(fin);
+
+}
+
+function apagarLucesDobleFuncion() {
+  // Fondo especial DF
+  document.body.classList.remove("fondo-doble");
+  document.body.style.backgroundImage = "";
+
+  // Overlay y LEDs
+  const dfOverlay = document.getElementById("dfLuzCamara");
+  if (dfOverlay) dfOverlay.style.display = "none";
+  ["dfLed1","dfLed2"].forEach(id=>{
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("on","blink");
+  });
+
+  // Sonidos del proyector
+  try { const loop = document.getElementById("sfxProyectorLoop"); if (loop){ loop.pause(); loop.currentTime = 0; } } catch(e){}
+  try { const click = document.getElementById("sfxProyectorClick"); if (click){ click.pause(); click.currentTime = 0; } } catch(e){}
+
+  // Estado DF (no cambiamos turno acá)
+  if (dobleFuncion) {
+    dobleFuncion.activo = false;
+    dobleFuncion.rondasPendientes = 0;
+  }
+}
+
+function playSfxDiamante(){
+  const sfx = document.getElementById('sfxDiamante');
+  if (!sfx) return;
+  // atenúa otros audios activos (p.ej. gong) para que no tape el bling
+  document.querySelectorAll('audio').forEach(a=>{
+    if (a !== sfx && !a.paused) a.volume = Math.min(a.volume, 0.25);
+  });
+  try { sfx.currentTime = 0; sfx.volume = 0.9; sfx.play().catch(()=>{}); } catch(e){}
+}
+
+
+
+// 1) Enganche directo cuando el DOM está listo
+document.addEventListener('DOMContentLoaded', () => {
+  const b = document.getElementById('btn-participantes-intro');
+  if (b) {
+    b.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      abrirModalParticipantes();
+    }, { capture: true });
+  }
+});
+
+// 2) Delegación por si el botón se vuelve a crear dinámicamente
+document.addEventListener('click', (ev) => {
+  const t = ev.target;
+  if (t && t.id === 'btn-participantes-intro') {
+    ev.preventDefault();
+    ev.stopPropagation();
+    abrirModalParticipantes();
+  }
+}, true);
+
+function togglePanelAjustes(){
+  const p = document.getElementById('panel-ajustes');
+  if (!p) return;
+  p.style.display = (p.style.display === 'none' || p.style.display === '') ? 'block' : 'none';
+}
+
+// Cerrar si clicás fuera
+document.addEventListener('click', (e)=>{
+  const p = document.getElementById('panel-ajustes');
+  const btn = document.getElementById('btn-ajustes');
+  if (!p || !btn) return;
+  const clickDentro = p.contains(e.target) || btn.contains(e.target);
+  if (!clickDentro) p.style.display = 'none';
+});
+
+
+// Dispara el warmup en el PRIMER gesto del usuario (una sola vez)
+document.addEventListener('pointerdown', warmupDiamanteFX, { once: true });
+
+// Redundancia amistosa: por si el primero gesto es alguno de tus botones
+document.getElementById('btn-sacar')?.addEventListener('click', warmupDiamanteFX, { once: true });
+document.getElementById('btn-listo')?.addEventListener('click', warmupDiamanteFX, { once: true });
+
+
+
+let _tinteTimeout, _tinteClearColor;
+function tintePorDiamante(equipo){           // 'cuchara' | 'tenedor'
+  const el = document.getElementById('tinteDiamante');
+  if (!el) return;
+
+  // limpiar estado previo
+  el.classList.remove('cuchara','tenedor','show','pulse');
+  if (_tinteTimeout) clearTimeout(_tinteTimeout);
+  if (_tinteClearColor) clearTimeout(_tinteClearColor);
+
+  // aplicar color y mostrar + pulso
+  el.classList.add(equipo);
+  // forzar reflow para que el add siguiente no se junte
+  void el.offsetWidth;
+  el.classList.add('show','pulse');
+
+  // fin del pulso (~900ms): primero saco la visibilidad...
+  _tinteTimeout = setTimeout(() => {
+    el.classList.remove('show','pulse');     // dispara el fade (.25s en CSS)
+    // ...y recién cuando terminó el fade, saco el color
+    _tinteClearColor = setTimeout(() => {
+      el.classList.remove('cuchara','tenedor');
+    }, 260); // igual o un pelín > que tu transition de opacity (.25s)
+  }, 900);
+}
+
+
+
+</script>
+
+ <div class="pantalla-inicio" id="pantallaInicio">
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <button id="btn-participantes-intro" type="button" onclick="abrirModalParticipantes()">➕ Participantes</button>
+    <div class="start-btn parpadeo" onclick="iniciarJuego()">START</div>
+
+    <div class="contenedor-meta">
+  <label for="metaPuntos">¿A cuántos puntos se juega?</label>
+  <input type="hidden" id="metaPuntos" value="30" />
+  <div class="selector-puntos">
+  <button class="flecha" onclick="cambiarPuntos(-1)">◀</button>
+  <span id="valorPuntos">30</span>
+  <button class="flecha" onclick="cambiarPuntos(1)">▶</button>
+</div>  <!-- ← cerrar selector-puntos AQUÍ -->
+
+  <!-- RONDAS + DIAMANTES -->
+<div class="contenedor-rondas" style="margin-top:14px; text-align:center;">
+  <label style="display:inline-flex; gap:8px; align-items:center; font-family:'Orbitron',sans-serif;">
+    <input type="checkbox" id="usarDiamantes" checked>
+    💎JUGAR POR DIAMANTES💎 (mejor de)
+  </label>
+
+  <div id="selectorDiamantes" class="selector-puntos" style="margin-top:6px;">
+    <button class="flecha" onclick="cambiarDiamantes(-1)">◀</button>
+    <span id="valorDiamantes">3</span>
+    <button class="flecha" onclick="cambiarDiamantes(1)">▶</button>
+    <span style="margin-left:6px;"></span>
+    <input type="hidden" id="cantDiamantes" value="3">
+  </div>
+</div>
+
+<!-- QR Películas (Intro) -->
+<div class="qr-container" id="qrPeliculas">
+  <div class="qr-glow"></div>
+  <div id="qr-root"></div>
+  <div class="qr-label">
+    <span class="qr-star">✦</span>
+    <span>Escaneá para abrir la web de <b>Películas</b></span>
+  </div>
+</div>
+
+
+</div>
+
+
+</div>
+
+  </div>
+
+  <audio id="sonidoBonus" src="sounds/sonidoBonus.mp3" preload="auto"></audio>
+
+  <audio id="musicaInicio" src="sounds/intro.mp3" autoplay loop></audio>
+
+  <audio id="sonidoGong" src="sounds/gong.mp3" preload="auto"></audio>
+
+  <audio id="sfxDiamante" preload="auto">
+  <source src="./sounds/diamond_win.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="sonidoDobleFuncion" src="sounds/doble_funcion_reveal.mp3" preload="auto"></audio>
+
+  <audio id="sonidoPerdio" src="sounds/perdio_turno.mp3"></audio>
+
+  <audio id="sonidoFantasma" src="sounds/sonido_fantasma.mp3" preload="auto"></audio>
+
+  <audio id="sonidoPopup" src="sounds/popup.mp3"></audio>
+
+  <audio id="sonidoRayo" src="sounds/rayo.mp3" preload="auto"></audio>
+
+  <audio id="sonidoVictoria" src="sounds/victoria.mp3" preload="auto"></audio>
+
+  <audio id="sonidoClickArcade" src="sounds/click_arcade.mp3"></audio>
+
+  <audio id="sonidoCorrecto" src="sounds/correcto.mp3" preload="auto"></audio>
+  <audio id="sonidoIncorrecto" src="sounds/incorrecto.mp3" preload="auto"></audio>
+
+  <audio id="sonidoIntercambio" src="sounds/intercambio.mp3" preload="auto"></audio>
+
+  <audio id="sonidoSacrificio" src="sounds/sacrificio_reveal.mp3" preload="auto"></audio>
+  <audio id="sonidoSacrificioSi" src="sounds/sacrificio_yes.mp3" preload="auto"></audio>
+
+
+  <audio id="sonidoStart">
+  <source src="sounds/start.mp3" type="audio/mp3" />
+  </audio>
+
+
+</div>
+
+<!-- === Overlay de Luz de Cámara / Proyector (DOBLE FUNCIÓN) === -->
+<div id="dfLuzCamara" style="display:none; position:fixed; inset:0; pointer-events:none; z-index:3500;">
+  <div class="df-haz izq"></div>
+  <div class="df-haz der"></div>
+  <div class="df-leds">
+    <span id="dfLed1" class="led"></span>
+    <span id="dfLed2" class="led"></span>
+  </div>
+</div>
+
+<!-- SFX opcionales -->
+<audio id="sfxProyectorClick" src="sounds/proyector_click.mp3" preload="auto"></audio>
+<audio id="sfxProyectorLoop"  src="sounds/proyector_loop.mp3"  preload="auto" loop></audio>
+
+
+<div id="fondoFantasma" style="display: none !important;"></div>
+
+<div id="turn-owner" aria-live="polite">
+  <span class="owner-team">TURNO</span>
+  <span class="owner-name" id="turn-owner-name">—</span>
+</div>
+
+
+<div id="modal-participantes" aria-hidden="true">
+  <div class="mp-box" role="dialog" aria-modal="true" aria-labelledby="mp-title">
+    <h2 id="mp-title">Participantes</h2>
+
+    <!-- 2 columnas: Cuchara | Tenedor -->
+    <div class="mp-two-col">
+      <!-- Columna Cuchara -->
+      <section class="mp-col">
+        <div class="mp-col-title">🥄 Cuchara</div>
+        <div class="mp-row">
+          <label for="mp-cantidad-cuchara">Cantidad</label>
+          <input id="mp-cantidad-cuchara" type="number" min="1" max="12" value="2"
+          oninput="generarCamposNombresEquipo('cuchara', true)"
+          onchange="generarCamposNombresEquipo('cuchara', true)">
+        </div>
+        <div id="mp-lista-cuchara"></div>
+      </section>
+
+      <!-- Columna Tenedor -->
+      <section class="mp-col">
+        <div class="mp-col-title">🍴 Tenedor</div>
+        <div class="mp-row">
+          <label for="mp-cantidad-tenedor">Cantidad</label>
+          <input id="mp-cantidad-tenedor" type="number" min="1" max="12" value="2"
+          oninput="generarCamposNombresEquipo('tenedor', true)"
+          onchange="generarCamposNombresEquipo('tenedor', true)">
+        </div>
+        <div id="mp-lista-tenedor"></div>
+      </section>
+    </div>
+
+    <div class="mp-actions">
+      <button type="button" class="cancel" id="mp-cerrar" onclick="guardarYcerrarModal()">Cerrar</button>
+      <button type="button" class="ok" id="mp-guardar"  onclick="guardarYcerrarModal()">Guardar</button>
+    </div>
+    <div style="margin-top:6px; font-size:11px; opacity:.7;">Tip: Enter dentro de un campo → salta al siguiente</div>
+  </div>
+</div>
+
+<!-- Panel flotante de Ajustes -->
+<div id="panel-ajustes" style="
+  display:none; position:fixed; top:48px; right:20px; z-index:10050;
+  background:#0c0c0c; color:#fff; border:2px solid #fff; border-radius:14px;
+  box-shadow:0 0 24px rgba(255,255,255,.25); width:240px; overflow:hidden;">
+  
+  <div style="padding:10px 12px; font-family:'Press Start 2P', cursive; font-size:12px; border-bottom:2px solid #333;">
+    AJUSTES
+  </div>
+
+  <div class="ajuste-item" style="padding:10px 12px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #222;">
+    <span>Volver al inicio</span>
+    <button onclick="volverAlInicio()" style="padding:6px 10px; border-radius:8px; border:2px solid #777; background:#222; color:#fff; font-family:'Orbitron',sans-serif;">🏠</button>
+  </div>
+
+  <div class="ajuste-item" style="padding:10px 12px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #222;">
+    <span>Pantalla completa</span>
+    <button onclick="alternarPantallaCompleta()" style="padding:6px 10px; border-radius:8px; border:2px solid #777; background:#222; color:#fff; font-family:'Orbitron',sans-serif;">🖥</button>
+  </div>
+
+  <div class="ajuste-item" style="padding:10px 12px; display:flex; justify-content:space-between; align-items:center;">
+    <span>Editar puntaje</span>
+    <button onclick="abrirEditorPuntaje()" style="padding:6px 10px; border-radius:8px; border:2px solid #777; background:#222; color:#fff; font-family:'Orbitron',sans-serif;">✎</button>
+  </div>
+</div>
+
+
+
+ <div id="tinteDiamante" aria-hidden="true"></div>
+
+ 
+ <!-- Librería QR estilizado -->
+<script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+
+<script>
+(function initQrPeliculas(){
+  const urlPeliculas = "https://peliculasdcm.netlify.app/";
+
+  const qr = new QRCodeStyling({
+    width: 180,
+    height: 180,
+    type: "svg",
+    data: urlPeliculas,
+    qrOptions: {
+      errorCorrectionLevel: "Q"
+    },
+    dotsOptions: {
+      type: "rounded",
+      color: "#FFD166"
+    },
+    backgroundOptions: {
+      color: "rgba(0,0,0,0)"
+    },
+    cornersSquareOptions: {
+      type: "extra-rounded",
+      color: "#FF6B6B"
+    },
+    cornersDotOptions: {
+      type: "dot",
+      color: "#FF6B6B"
+    }
+    // image: "./assets/icono-estrella.png",
+    // imageOptions: { imageSize: 0.28, margin: 4, crossOrigin: "anonymous" }
+  });
+
+  const root = document.getElementById("qr-root");
+  if(root){
+    qr.append(root);
+    root.style.cursor = "pointer";
+    root.addEventListener("click", () => {
+      window.open(urlPeliculas, "_blank", "noopener");
+    });
+  }
+})();
+</script>
+
+
+</body>
+</html>
