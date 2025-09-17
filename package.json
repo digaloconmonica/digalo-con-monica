@@ -8,8 +8,7 @@
   
   "scripts": {
   "start": "electron .",
-  "pack:mac": "electron-builder --mac dir",
-  "dist:mac": "electron-builder --mac dmg zip"
+  "dist:mac": "electron-builder --mac dmg zip --publish never"
 },
   "devDependencies": {
     "electron": "^38.1.0",
